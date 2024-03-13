@@ -28,3 +28,10 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+.rung-display {
+    position: absolute;
+    right: 60px;
+    top: 60px;
+    font-size: 20px;
+}
