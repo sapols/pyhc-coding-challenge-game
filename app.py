@@ -15,6 +15,13 @@ teams_data = {}
 def index():
     return send_from_directory('static', 'index.html')
 
+@app.route('/api/init/<team_id>', methods=['POST'])
+def init_team(team_id):
+    if team_id not in teams_data:
+        teams_data[team_id] = {'current_rung': 1, 'points': 0, 'hints': 2, 'skips': 1, 'completed_tasks': [], 'skipped_tasks': []}
+        return jsonify({'message': f'Team {team_id} initialized.'}), 200
+    return jsonify({'message': f'Team {team_id} already exists.'}), 200
+
 @app.route('/api/tasks/<int:rung>', methods=['GET'])
 def get_tasks(rung):
     # Assuming rung numbers in the JSON start from 1 (e.g., "Rung_1")
@@ -23,6 +30,8 @@ def get_tasks(rung):
         return jsonify({'rung_tasks': tasks[rung_key]['tasks'], 'rung_points': tasks[rung_key]['points']}), 200
     else:
         return jsonify({'error': 'Rung not found'}), 404
+
+# TODO: function to draw a random task (without repeats) for the given team from the specified rung?
 
 @app.route('/api/submit/<team_id>/<int:task_number>', methods=['POST'])
 def submit_task(team_id, task_number):
@@ -34,9 +43,9 @@ def submit_task(team_id, task_number):
         for task in rung_data['tasks']:
             if task['task_number'] == task_number:
                 # Update team data with completed task and points
-                if team_id not in teams_data:
-                    teams_data[team_id] = {'current_rung': 1, 'points': 0, 'hints': 2, 'skips': 1,
-                                           'completed_tasks': [], 'skipped_tasks': []}
+                # if team_id not in teams_data:
+                #     teams_data[team_id] = {'current_rung': 1, 'points': 0, 'hints': 2, 'skips': 1,
+                #                            'completed_tasks': [], 'skipped_tasks': []}
                 if task_number not in teams_data[team_id]['completed_tasks']:
                     teams_data[team_id]['completed_tasks'].append(task_number)
                     teams_data[team_id]['points'] += rung_data['points']

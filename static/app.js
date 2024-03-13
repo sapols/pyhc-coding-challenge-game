@@ -1,5 +1,5 @@
 let currentTaskNumber = null; // To keep track of the current task
-const teamId = 'team1'; // Example team ID
+let teamId; // Initialize without a value because it gets set on page load
 let currentRung = 1; // Start from rung 1
 
 // Define drawTask in the global scope
@@ -36,22 +36,31 @@ function submitTask(taskNumber) {
 
 function requestHint(taskNumber) {
     fetch(`/api/hint/${teamId}/${taskNumber}`, { method: 'POST' })
-        .then(response => response.json())
-        .then(data => {
-//            debugger;
+    .then(response => response.json())
+    .then(data => {
+        if(data.hints_left !== undefined) {
             alert(`Hint: ${data.hint}\nHints left: ${data.hints_left}`); // Show hint to the user
-        })
-        .catch(error => console.error('Error requesting hint:', error));
+            if (data.hints_left === 0) {
+                document.getElementById('get-hint').disabled = true;
+                document.getElementById('get-hint').style.backgroundColor = '#ccc';
+            }
+        }
+    })
+    .catch(error => console.error('Error requesting hint:', error));
 }
 
 function skipCurrentTask(taskNumber) {
-    fetch(`/api/skip/${teamId}/${taskNumber}`, { method: 'POST' })
-        .then(response => response.json())
-        .then(data => {
-            alert(`${data.message}\nSkips left: ${data.skips_left}`); // Notify the team the task was skipped
-            drawTask(); // Automatically draw a new task
-        })
-        .catch(error => console.error('Error skipping task:', error));
+    fetch(`/api/skip/${teamId}/${taskNumber}`, { method: 'POST' }) // Note: Ensure currentTaskNumber is correctly assigned when drawing a task
+    .then(response => response.json())
+    .then(data => {
+        alert(`${data.message}\nSkips left: ${data.skips_left}`); // Notify the team the task was skipped
+        if (data.skips_left === 0) {
+            document.getElementById('skip-task').disabled = true;
+            document.getElementById('skip-task').style.backgroundColor = '#ccc';
+        }
+        drawTask(); // Automatically draw a new task
+    })
+    .catch(error => console.error('Error skipping task:', error));
 }
 
 function startTimer(duration, display) {
@@ -79,6 +88,16 @@ function updateRungDisplay() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    const teamName = prompt("Please enter your team name (no spaces):", "team1");
+    if (teamName != null && teamName !== "") {
+        teamId = teamName; // Set the global teamId with the entered team name
+        // Fetch to initialize the team data or check if the team is already initialized
+        fetch(`/api/init/${teamId}`, { method: 'POST' })
+        .then(response => response.json())
+        .then(data => console.log(data.message))
+        .catch(error => console.error('Error initializing team:', error));
+    }
+
     document.getElementById('team-points').textContent = `${teamId} Points: 0`; // Initialize team points with team name
     document.getElementById('draw-task').addEventListener('click', drawTask);
     document.getElementById('get-hint').addEventListener('click', () => {

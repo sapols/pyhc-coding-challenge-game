@@ -29,6 +29,11 @@ button:hover {
     background-color: #0056b3;
 }
 
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
 .rung-display {
     position: absolute;
     right: 60px;
