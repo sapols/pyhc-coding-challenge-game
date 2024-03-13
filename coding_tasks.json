@@ -1,0 +1,243 @@
+{
+    "Rung_1": {
+        "points": 1,
+        "tasks": [
+            {
+                "task_number": 1,
+                "title": "List Available HAPI Server URLs",
+                "description": "Write a Python script that successfully imports the hapiclient package and lists all available HAPI server URLs.",
+                "hint": "The import statement is typically the first line in your Python script. Use the hapi() function."
+            },
+            {
+                "task_number": 2,
+                "title": "List Available CDAWeb Datasets",
+                "description": "Use the hapiclient to connect to the CDAWeb HAPI server (https://cdaweb.gsfc.nasa.gov/hapi) and print the server's catalog of datasets.",
+                "hint": "Refer to the hapiclient documentation or example notebooks for guidance on connecting to a server and retrieving the catalog."
+            },
+            {
+                "task_number": 3,
+                "title": "Reading Metadata (v1)",
+                "description": "Access and display the metadata for all parameters of the \"OMNI2_H0_MRG1HR\" dataset from the CDAWeb HAPI server.",
+                "hint": "Pass two things to the hapi() function."
+            },
+            {
+                "task_number": 4,
+                "title": "List CTIPe Model Variables",
+                "description": "Import the Kamodo model wrapper and list all variables available for the model 'CTIPe'",
+                "hint": "Use the Model_Variables() function."
+            },
+            {
+                "task_number": 5,
+                "title": "Set the pysat \u201cdata_dirs\u201d Parameter",
+                "description": "Set the pysat \u201cdata_dirs\u201d parameter to something reasonable.",
+                "hint": "Pass something to pysat.params[]."
+            },
+            {
+                "task_number": 6,
+                "title": "Display Available pysatMadrigal Instruments",
+                "description": "Display the different Instruments available in the pysatMadrigal package.",
+                "hint": "Use pysat.utils.display_available_instruments()."
+            },
+            {
+                "task_number": 7,
+                "title": "List Available SunPy Remote Data Sources",
+                "description": "SunPy's Fido supports a number of different remote data sources. Display a list of them.",
+                "hint": "Display the Fido object."
+            },
+            {
+                "task_number": 8,
+                "title": "List Available SunPy Instruments",
+                "description": "SunPy's Fido supports a number of different instruments. Display a list of them.",
+                "hint": "Display the `attrs.Instrument` object."
+            },
+            {
+                "task_number": 9,
+                "title": "Count Closed PyHC Package Issues",
+                "description": "Find and report the number of resolved issues for a specified PyHC package.",
+                "hint": "Check the package\u2019s GitHub page."
+            },
+            {
+                "task_number": 10,
+                "title": "Find the Contribution Rules in a PyHC Package Repository",
+                "description": "Find and give the link to the contribution rules for a specified PyHC package.",
+                "hint": "Check the package's GitHub repo."
+            },
+            {
+                "task_number": 11,
+                "title": "Identify a PyHC Package's License Type",
+                "description": "Find the software license in a PyHC package repository and report what kind of license it is.",
+                "hint": "Check the package's GitHub repo."
+            }
+        ]
+    },
+    "Rung_2": {
+        "points": 2,
+        "tasks": [
+            {
+                "task_number": 12,
+                "title": "Reading Metadata (v2)",
+                "description": "Find the time coverage (start and end times) of the \"ace\" dataset from the SSCWeb HAPI server.",
+                "hint": "Pass two things to the hapi() function, then look for start/stop dates."
+            },
+            {
+                "task_number": 13,
+                "title": "Reading Data (v1)",
+                "description": "Use the hapiclient to download exactly one hour of the following data: Server: SSCWeb, Dataset: \"ace\", Parameters: \"X_GSE\", \"Y_GSE\", \"Z_GSE\", Start time: 5:00 AM January 1st, 2001, Stop time: 6:00 AM January 1st, 2001.",
+                "hint": "Look into what parameters the hapi() function accepts."
+            },
+            {
+                "task_number": 14,
+                "title": "Reading Data (v2)",
+                "description": "Use the hapiclient to download exactly one hour of the following data: Server: CDAWeb, Dataset: \"OMNI2_H0_MRG1HR\", Parameters: \"DST1800\", Start time: Midnight September 1st, 2003, Stop time: Midnight September 2nd, 2003.",
+                "hint": "Look into what parameters the hapi() function accepts."
+            },
+            {
+                "task_number": 15,
+                "title": "Functionalize a Dataset",
+                "description": "Functionalize the following new dataset made up of numpy arrays for time, lon, lat, and a variable 'speed' in km/s, then display the Kamodo object.",
+                "hint": "Use the Functionalize_Dataset() function."
+            },
+            {
+                "task_number": 16,
+                "title": "Print a Test pysat Instrument",
+                "description": "How to load and print a test instrument to prove pysat is working.",
+                "hint": "Use the pysat.Instrument() function."
+            },
+            {
+                "task_number": 17,
+                "title": "Register pysatNASA Instruments With pysat",
+                "description": "Once a Library Package is imported the instruments that belong to it must be registered with pysat. This needs to be done only once and will allow straightforward instantiation of instruments. Once you have registered the instruments, display the available instruments again to see how the list has updated.",
+                "hint": "Use the `register_by_module()` function."
+            },
+            {
+                "task_number": 18,
+                "title": "Search for SDO AIA Data",
+                "description": "Using SunPy's Fido search interface, display the results of searching for all SDO AIA image data from today. Do not download the data; just show the search results.",
+                "hint": "`Fido.search()` returns a `results` object."
+            },
+            {
+                "task_number": 19,
+                "title": "Find the Citations for PyHC Package Repositories",
+                "description": "Find and report both the APA citation and DOI for the following PyHC packages: HAPI Client, Kamodo, PlasmaPy, pysat, SpacePy, SunPy.",
+                "hint": "Check Zenodo."
+            }
+        ]
+    },
+    "Rung_3": {
+        "points": 4,
+        "tasks": [
+            {
+                "task_number": 20,
+                "title": "Exploring Data and Metadata",
+                "description": "Download data and metadata for the first five rows of a dataset of your choice from HAPI's \"TestData2.0\" server. Include the time parameter and one other parameter of your choice. Find the appropriate time range for your dataset that includes only the first five rows of data. Show work for how you found the necessary metadata to make your call.",
+                "hint": "List servers to find \"TestData2.0\" URL, list its catalog to find datasets, look at dataset metadata."
+            },
+            {
+                "task_number": 21,
+                "title": "Plotting Data (v2)",
+                "description": "Write a one-liner that plots four hours of the \"B_NEC\" parameter of the \"SW_OPER_MAGA_LR_1B\" dataset from the VirES HAPI server. Excluding any import statements, you may only use one line of code with one function call.",
+                "hint": "List all HAPI servers to find VirES URL; inspect dataset metadata to find a four-hour time range; use the hapiplot() function."
+            },
+            {
+                "task_number": 22,
+                "title": "Plot HAPI data with pySPEDAS/PyTplot",
+                "description": "Using pySPEDAS, load into tplot variables the \"SW_P_Den\" and \"SW_V\" parameters of the \"GE_K0_CPI\" dataset from CDAWeb, in the time range 12:00:40Z 1992-09-09 to 00:00:00.000Z 1992-09-10. Then plot those parameters with PyTplot.",
+                "hint": "Use pySPEDAS's pyhapi() function then PyTplot's tplot() function."
+            },
+            {
+                "task_number": 23,
+                "title": "Generate an Interactive Plot of a Kamodo Object",
+                "description": "Functionalize the following new dataset made up of numpy arrays for time, lon, lat, and a variable 'speed' in km/s, then generate an interactive plot of the result.",
+                "hint": "Kamodo objects have a plot() function."
+            },
+            {
+                "task_number": 24,
+                "title": "Extract GITM Data",
+                "description": "Extract the value of 'TEC' from a provided GITM run at 2015-03-14 01:00 UT, 30 degrees longitude, and 75 degrees latitude. NOTE: this will require local model output at 'DATA/GITM/GITM_small_test_data/'.",
+                "hint": "First make a Kamodo object with requested variables 'rho_n' and 'TEC', then extract from it."
+            },
+            {
+                "task_number": 25,
+                "title": "Create a DMSP IVM Instrument and Load Data",
+                "description": "Once you have a library package and its instruments registered you can instantiate an instrument and load data. Once the data is loaded try inspecting the data in the instrument object.",
+                "hint": ""
+            },
+            {
+                "task_number": 26,
+                "title": "Plot the Latest Solar Image from SDO AIA",
+                "description": "Find the most recent image from SDO's AIA instrument at 171 \u00c5 using SunPy's Fido, then plot it.",
+                "hint": ""
+            },
+            {
+                "task_number": 27,
+                "title": "Time String Conversions",
+                "description": "Convert the time string '2005-06-01T13:33:00.1Z' into a datetime object, then into a timestamp, then back to a datetime object preserving UTC time.",
+                "hint": "Import and use `pytz`, `datetime`, and `dateutil`."
+            }
+        ]
+    },
+    "Rung_4": {
+        "points": 8,
+        "tasks": [
+            {
+                "task_number": 28,
+                "title": "Plotting Data (v1)",
+                "description": "Use hapiplot to plot Total Solar Irradiance from 1950 to the present day, via the Historical TSI dataset in LISIRD's HAPI server.",
+                "hint": "Use the hapi() and/or hapiplot() functions; don't code the plot from scratch by hand."
+            },
+            {
+                "task_number": 29,
+                "title": "Converting to Pandas DataFrame",
+                "description": "Download the following dataset, then convert it to store the data in a Pandas DataFrame. Use the hapitime2datetime() function to convert time values to Python datetime objects. The resulting DataFrame must use time as the index, and the columns must be named 'Time', 'scalar','vector_x', 'vector_y', 'vector_z'.",
+                "hint": "You can pass all time values at once to hapitime2datetime()."
+            },
+            {
+                "task_number": 30,
+                "title": "Coordinate Transform with SpacePy",
+                "description": "Print out the GSE and GSM values reported by SSCWeb. Use SpacePy to convert the GSE values to GSM.",
+                "hint": "Use HAPI's hapitime2datetime() function, and SpacePy's sc.Coords(), Ticktock(), convert() functions."
+            },
+            {
+                "task_number": 31,
+                "title": "Extract and Plot GITM Data",
+                "description": "Extract 'rho_n' and 'TEC' from a provided GITM run between 2015-03-14 00:00 and 2015-03-14 01:30 along the 'cnofs' satellite trajectory, then functionalize it in Kamodo and plot TEC.",
+                "hint": "Use the SatelliteFlythrough.RealFlight() function."
+            },
+            {
+                "task_number": 32,
+                "title": "Make a Movie of SDO AIA Solar Imagery",
+                "description": "Make a short movie or loop using 1 day of AIA 0095 A images for the period X-Y.",
+                "hint": "Download files then create a MapSequence from them and animate them."
+            },
+            {
+                "task_number": 33,
+                "title": "Difference image",
+                "description": "Pick 2 consecutive EUV images from SDO or STEREO and create a difference image (subtract the 2 to see what changed during that time step).",
+                "hint": ""
+            }
+        ]
+    },
+    "Rung_5": {
+        "points": 16,
+        "tasks": [
+            {
+                "task_number": 34,
+                "title": "Interpolating Time",
+                "description": "For analysis, it is often useful to place two datasets that have different timestamps on the same time grid. Starting with a program that reads datasets from two different data servers, write a program that interpolates one dataset onto the time grid of another and create a table or plot that allows one to visually compare the interpolated values with the given values.",
+                "hint": "Use one of the interpolation approaches mentioned in the description."
+            },
+            {
+                "task_number": 35,
+                "title": "Parker Solar Probe",
+                "description": "???? something dealing with PSP images & streamers & noise ????",
+                "hint": ""
+            },
+            {
+                "task_number": 36,
+                "title": "Take Two Spacecraft With Different Angles and Reproject Their Views",
+                "description": "remix of SunPy 'reproject AIA & EUVI to show same region'.",
+                "hint": ""
+            }
+        ]
+    }
+}

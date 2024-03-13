@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyHC Roulette Ladder</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div id="app">
+        <h1>PyHC Roulette Ladder Game</h1>
+        <div id="timer">Timer: <span id="time-left">90:00</span></div>
+        <div id="team-info">
+            Team Points: <span id="team-points">0</span>
+            <button id="get-hint">Get Hint</button>
+            <button id="skip-task">Skip Task</button>
+        </div>
+        <div id="tasks-container">
+            <button id="draw-task">Draw Task</button>
+            <div id="current-task"></div>
+        </div>
+    </div>
+    <script src="/static/app.js"></script>
+</body>
+</html>
