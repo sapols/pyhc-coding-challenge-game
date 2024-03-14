@@ -19,6 +19,7 @@ function drawTask() {
             // Display the task with a Submit Task button
             currentTaskDiv.innerHTML = `<h2>${task.title} [${pointsStr}]</h2><p>${task.description}</p><button onclick="submitTask(${task.task_number})">Submit Task</button>`;
             updateRungDisplay(); // Update the rung display
+            document.getElementById('draw-task').disabled = true; // Disable button after first press
         })
         .catch(error => console.error('Error fetching tasks:', error));
 }
