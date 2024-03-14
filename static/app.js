@@ -1,6 +1,7 @@
 let currentTaskNumber = null; // To keep track of the current task
 let teamId; // Initialize without a value because it gets set on page load
 let currentRung = 1; // Start from rung 1
+let highestUnlockedRung = 1; // Initialize with the first rung unlocked
 
 // Define drawTask in the global scope
 function drawTask() {
@@ -29,7 +30,9 @@ function submitTask(taskNumber) {
             alert(`${data.message}\nTotal points: ${data.current_points}`); // Simple feedback to the user
             document.getElementById('team-points').textContent = `${teamId} Points: ${data.current_points}`; // Update points displayed with team name
             currentRung = Math.min(currentRung + 1, 5); // Advance to the next rung, max out at 5
+            highestUnlockedRung = Math.max(highestUnlockedRung, currentRung); // Update the highest unlocked rung
             drawTask(); // Draw a new task automatically
+            updateRungDisplay(); // Update the display
         })
         .catch(error => console.error('Error submitting task:', error));
 }
@@ -82,9 +85,24 @@ function startTimer(duration, display) {
     }, 1000);
 }
 
+function selectRung(rung) {
+    currentRung = rung;
+    drawTask();
+    updateRungDisplay();
+}
+
 function updateRungDisplay() {
-    const rungDisplay = document.getElementById('current-rung');
-    rungDisplay.textContent = `Current Rung: ${currentRung}`;
+    for (let i = 1; i <= 5; i++) {
+        const btn = document.getElementById(`rung-${i}`);
+        btn.disabled = i > highestUnlockedRung || i === currentRung;
+        btn.classList.toggle('active', i === currentRung);
+        // Remove previously set special class for the active button to reset state
+        btn.classList.remove('active-disabled');
+        // If the button is the current rung and it's disabled, add a specific class
+        if(i === currentRung && btn.disabled) {
+            btn.classList.add('active-disabled');
+        }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

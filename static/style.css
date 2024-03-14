@@ -34,9 +34,50 @@ button:disabled {
     cursor: not-allowed;
 }
 
+/**
 .rung-display {
     position: absolute;
     right: 60px;
     top: 60px;
     font-size: 20px;
+}
+**/
+
+#rungs-container {
+    position: absolute;
+    right: 60px;
+    top: 60px;
+}
+
+.rungs-title {
+    margin-bottom: 0px; /* Add some space between the title and the buttons */
+    text-align: left; /* Center-align the title */
+    color: #333; /* Set the text color */
+    font-size: 1em; /* Adjust the font size as needed */
+}
+
+
+.rung-btn {
+    display: block;
+    background-color: orange;
+    color: white;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    cursor: pointer;
+}
+
+.rung-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.rung-btn.active {
+    border: 2px solid #000;
+}
+
+.rung-btn.active-disabled {
+    background-color: orange; /* Maintain the active button color even when disabled */
+    color: white;
+    cursor: default; /* Use default cursor for the currently-active rung's button */
 }

@@ -8,8 +8,15 @@
 </head>
 <body>
     <div id="app">
-        <div id="current-rung" class="rung-display">Current Rung: 1</div>
-        <h1>PyHC Roulette Ladder Game</h1>
+        <div id="rungs-container">
+            <h3 class="rungs-title">Rungs</h3>
+            <button class="rung-btn" id="rung-5" onclick="selectRung(5)">5</button>
+            <button class="rung-btn" id="rung-4" onclick="selectRung(4)">4</button>
+            <button class="rung-btn" id="rung-3" onclick="selectRung(3)">3</button>
+            <button class="rung-btn" id="rung-2" onclick="selectRung(2)">2</button>
+            <button class="rung-btn" id="rung-1" onclick="selectRung(1)">1</button>
+        </div>
+        <h1>PyHC Challenge Ladder</h1>
         <div id="timer">Timer: <span id="time-left">90:00</span></div>
         <div id="team-info">
             <span id="team-points">Team Points: 0</span>
