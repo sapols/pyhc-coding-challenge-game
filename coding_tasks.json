@@ -16,7 +16,7 @@
             },
             {
                 "task_number": 3,
-                "title": "Reading Metadata (v1)",
+                "title": "Reading OMNI HAPI Metadata",
                 "description": "Access and display the metadata for all parameters of the \"OMNI2_H0_MRG1HR\" dataset from the CDAWeb HAPI server.",
                 "hint": "Pass two things to the hapi() function."
             },
@@ -53,60 +53,61 @@
             {
                 "task_number": 9,
                 "title": "Count Closed PyHC Package Issues",
-                "description": "Find and report the number of resolved issues for a specified PyHC package.",
-                "hint": "Check the package\u2019s GitHub page."
+                "description": "Find and report the number of closed issues for all core PyHC packages: HAPI Client, Kamodo, PlasmaPy, pysat, pySPEDAS, SpacePy, and SunPy.",
+                "hint": "Check the packages' GitHub pages."
             },
             {
                 "task_number": 10,
-                "title": "Find the Contribution Rules in a PyHC Package Repository",
-                "description": "Find and give the link to the contribution rules for a specified PyHC package.",
-                "hint": "Check the package's GitHub repo."
+                "title": "Find PyHC Package Repository Contribution Rules",
+                "description": "Find and give the link to the contribution rules for the following PyHC packages: PlasmaPy, pysat, and pySPEDAS.",
+                "hint": "Check the packages' GitHub repos."
             },
             {
                 "task_number": 11,
-                "title": "Identify a PyHC Package's License Type",
-                "description": "Find the software license in a PyHC package repository and report what kind of license it is.",
-                "hint": "Check the package's GitHub repo."
+                "title": "Identify PyHC Package License Types",
+                "description": "Find the software license in each core PyHC package repository and report what kind of license it is: HAPI Client, Kamodo, PlasmaPy, pysat, pySPEDAS, SpacePy, and SunPy.",
+                "hint": "Check the packages' GitHub repos."
             }
         ]
     },
     "Rung_2": {
-        "points": 2,
+        "points": 4,
         "tasks": [
             {
                 "task_number": 12,
-                "title": "Reading Metadata (v2)",
+                "title": "Reading ACE HAPI Metadata",
                 "description": "Find the time coverage (start and end times) of the \"ace\" dataset from the SSCWeb HAPI server.",
                 "hint": "Pass two things to the hapi() function, then look for start/stop dates."
             },
             {
                 "task_number": 13,
-                "title": "Reading Data (v1)",
-                "description": "Use the hapiclient to download exactly one hour of the following data: Server: SSCWeb, Dataset: \"ace\", Parameters: \"X_GSE\", \"Y_GSE\", \"Z_GSE\", Start time: 5:00 AM January 1st, 2001, Stop time: 6:00 AM January 1st, 2001.",
+                "title": "Reading ACE HAPI Data",
+                "description": "Use the hapiclient to download exactly one hour of the following data:<br><ul><li>Server: SSCWeb</li><li>Dataset: \"ace\"</li><li>Parameters: \"X_GSE\", \"Y_GSE\", \"Z_GSE\"</li><li>Start time: 5:00 AM January 1st, 2001 UTC</li><li>Stop time: 6:00 AM January 1st, 2001 UTC</li></ul>",
                 "hint": "Look into what parameters the hapi() function accepts."
             },
             {
                 "task_number": 14,
-                "title": "Reading Data (v2)",
-                "description": "Use the hapiclient to download exactly one hour of the following data: Server: CDAWeb, Dataset: \"OMNI2_H0_MRG1HR\", Parameters: \"DST1800\", Start time: Midnight September 1st, 2003, Stop time: Midnight September 2nd, 2003.",
+                "title": "Reading OMNI HAPI Data",
+                "description": "Use the hapiclient to download exactly one hour of the following data:<br><ul><li>Server: CDAWeb</li><li>Dataset: \"OMNI2_H0_MRG1HR\"</li><li>Parameters: \"DST1800\"</li><li>Start time: Midnight September 1st, 2003 UTC</li><li>Stop time: Midnight September 2nd, 2003 UTC</li></ul>",
                 "hint": "Look into what parameters the hapi() function accepts."
             },
             {
                 "task_number": 15,
-                "title": "Functionalize a Dataset",
-                "description": "Functionalize the following new dataset made up of numpy arrays for time, lon, lat, and a variable 'speed' in km/s, then display the Kamodo object.",
+                "title": "Functionalize a Dataset with Kamodo",
+                "description": "Functionalize the following new dataset made up of numpy arrays for time, lon, lat, and a variable 'speed' in km/s, then display the Kamodo object:<br><br><pre><code>import numpy as np<br>coord_dict = {'time': {'units': 'hr', 'data': np.linspace(0., 24., 25)},<br>             'lon': {'units': 'deg', 'data': np.linspace(-180., 180., 37)},<br>             'lat': {'units': 'deg', 'data': np.linspace(-90., 90., 19)}}<br>var_dict = {'speed': {'units': 'km/s', 'data': np.random.RandomState(1).rand(25, 37, 19)}}</code></pre>",
+                "code": "<pre><code>import numpy as np<br>coord_dict = {'time': {'units': 'hr', 'data': np.linspace(0., 24., 25)},<br>             'lon': {'units': 'deg', 'data': np.linspace(-180., 180., 37)},<br>             'lat': {'units': 'deg', 'data': np.linspace(-90., 90., 19)}}<br>var_dict = {'speed': {'units': 'km/s', 'data': np.random.RandomState(1).rand(25, 37, 19)}}</code></pre>",
                 "hint": "Use the Functionalize_Dataset() function."
             },
             {
                 "task_number": 16,
                 "title": "Print a Test pysat Instrument",
-                "description": "How to load and print a test instrument to prove pysat is working.",
+                "description": "Load and print the 'testing' instrument to prove pysat is working.",
                 "hint": "Use the pysat.Instrument() function."
             },
             {
                 "task_number": 17,
-                "title": "Register pysatNASA Instruments With pysat",
-                "description": "Once a Library Package is imported the instruments that belong to it must be registered with pysat. This needs to be done only once and will allow straightforward instantiation of instruments. Once you have registered the instruments, display the available instruments again to see how the list has updated.",
+                "title": "Register pysatNASA Instruments with pysat",
+                "description": "Import the pysatNASA package and register its instruments with pysat. After registration, list the available instruments to confirm they have been added successfully.",
                 "hint": "Use the `register_by_module()` function."
             },
             {
@@ -124,17 +125,17 @@
         ]
     },
     "Rung_3": {
-        "points": 4,
+        "points": 8,
         "tasks": [
             {
                 "task_number": 20,
-                "title": "Exploring Data and Metadata",
+                "title": "Exploring HAPI Data and Metadata",
                 "description": "Download data and metadata for the first five rows of a dataset of your choice from HAPI's \"TestData2.0\" server. Include the time parameter and one other parameter of your choice. Find the appropriate time range for your dataset that includes only the first five rows of data. Show work for how you found the necessary metadata to make your call.",
                 "hint": "List servers to find \"TestData2.0\" URL, list its catalog to find datasets, look at dataset metadata."
             },
             {
                 "task_number": 21,
-                "title": "Plotting Data (v2)",
+                "title": "Plotting HAPI Data",
                 "description": "Write a one-liner that plots four hours of the \"B_NEC\" parameter of the \"SW_OPER_MAGA_LR_1B\" dataset from the VirES HAPI server. Excluding any import statements, you may only use one line of code with one function call.",
                 "hint": "List all HAPI servers to find VirES URL; inspect dataset metadata to find a four-hour time range; use the hapiplot() function."
             },
@@ -147,7 +148,8 @@
             {
                 "task_number": 23,
                 "title": "Generate an Interactive Plot of a Kamodo Object",
-                "description": "Functionalize the following new dataset made up of numpy arrays for time, lon, lat, and a variable 'speed' in km/s, then generate an interactive plot of the result.",
+                "description": "Functionalize the following new dataset made up of numpy arrays for time, lon, lat, and a variable 'speed' in km/s, then generate an interactive plot of the result:<br><pre><code>import numpy as np<br>coord_dict = {'time': {'units': 'hr', 'data': np.linspace(0., 24., 25)},<br>             'lon': {'units': 'deg', 'data': np.linspace(-180., 180., 37)},<br>             'lat': {'units': 'deg', 'data': np.linspace(-90., 90., 19)}}<br>var_dict = {'speed': {'units': 'km/s', 'data': np.random.RandomState(1).rand(25, 37, 19)}}</code></pre>",
+                "code": "<pre><code>import numpy as np<br>coord_dict = {'time': {'units': 'hr', 'data': np.linspace(0., 24., 25)},<br>             'lon': {'units': 'deg', 'data': np.linspace(-180., 180., 37)},<br>             'lat': {'units': 'deg', 'data': np.linspace(-90., 90., 19)}}<br>var_dict = {'speed': {'units': 'km/s', 'data': np.random.RandomState(1).rand(25, 37, 19)}}</code></pre>",
                 "hint": "Kamodo objects have a plot() function."
             },
             {
@@ -158,15 +160,15 @@
             },
             {
                 "task_number": 25,
-                "title": "Create a DMSP IVM Instrument and Load Data",
-                "description": "Once you have a library package and its instruments registered you can instantiate an instrument and load data. Once the data is loaded try inspecting the data in the instrument object.",
-                "hint": ""
+                "title": "Create an ICON IVM Instrument and Load Data",
+                "description": "Import the pysatNASA package and register its instruments with pysat. After registration, create an ICON IVM instrument and load data. Then try inspecting the data in the instrument object once loaded.",
+                "hint": "Set `data_dirs`; register pysatNASA; create the instrument; load the data; show the data."
             },
             {
                 "task_number": 26,
                 "title": "Plot the Latest Solar Image from SDO AIA",
                 "description": "Find the most recent image from SDO's AIA instrument at 171 \u00c5 using SunPy's Fido, then plot it.",
-                "hint": ""
+                "hint": "Search with SunPy's Fido. Then, fetch the most recent result and plot it using SunPy's Map."
             },
             {
                 "task_number": 27,
@@ -177,53 +179,55 @@
         ]
     },
     "Rung_4": {
-        "points": 8,
+        "points": 16,
         "tasks": [
             {
                 "task_number": 28,
-                "title": "Plotting Data (v1)",
+                "title": "Plotting  Total Solar Irradiance HAPI Data",
                 "description": "Use hapiplot to plot Total Solar Irradiance from 1950 to the present day, via the Historical TSI dataset in LISIRD's HAPI server.",
                 "hint": "Use the hapi() and/or hapiplot() functions; don't code the plot from scratch by hand."
             },
             {
                 "task_number": 29,
                 "title": "Converting to Pandas DataFrame",
-                "description": "Download the following dataset, then convert it to store the data in a Pandas DataFrame. Use the hapitime2datetime() function to convert time values to Python datetime objects. The resulting DataFrame must use time as the index, and the columns must be named 'Time', 'scalar','vector_x', 'vector_y', 'vector_z'.",
+                "description": "Download data from the specified server and convert it to a Pandas DataFrame. The time values should be converted to Python datetime objects using the hapitime2datetime() function. Ensure the resulting DataFrame uses time as the index, with columns labeled 'Time', 'scalar', 'vector_x', 'vector_y', 'vector_z'.<br><ul><li>Server: \"http://hapi-server.org/servers/TestData2.0/hapi\"</li><li>Dataset: \"dataset1\"</li><li>Parameters: \"scalar\", \"vector\"</li><li>Start time: 12:00:00 AM January 1st, 1970 UTC</li><li>Stop time: 12:00:10 AM January 1st, 1970 UTC</li></ul>",
                 "hint": "You can pass all time values at once to hapitime2datetime()."
             },
             {
                 "task_number": 30,
                 "title": "Coordinate Transform with SpacePy",
-                "description": "Print out the GSE and GSM values reported by SSCWeb. Use SpacePy to convert the GSE values to GSM.",
+                "description": "Starting with the following program, (1) Print out the GSE and GSM values reported by SSCWeb, (2) Use SpacePy to convert the GSE values to GSM. <br><pre><code>import spacepy.coordinates as sc<br>from spacepy.time import Ticktock<br><br>from hapiclient import hapi, hapitime2datetime<br><br>server     = 'https://hapi-server.org/servers/SSCWeb/hapi'<br>dataset    = 'swarma'<br>parameters = 'X_GSE,Y_GSE,Z_GSE,X_GSM,Y_GSM,Z_GSM'<br>start      = '2013-11-26T00:00:00Z'<br>stop       = '2013-11-26T00:01:00Z'<br><br>opts       = {'logging': True, 'usecache': True, 'cachedir': './hapicache'}<br><br>data, meta = hapi(server, dataset, parameters, start, stop)<br>print(data)</code></pre>",
+                "code": "<pre><code>import spacepy.coordinates as sc<br>from spacepy.time import Ticktock<br><br>from hapiclient import hapi, hapitime2datetime<br><br>server     = 'https://hapi-server.org/servers/SSCWeb/hapi'<br>dataset    = 'swarma'<br>parameters = 'X_GSE,Y_GSE,Z_GSE,X_GSM,Y_GSM,Z_GSM'<br>start      = '2013-11-26T00:00:00Z'<br>stop       = '2013-11-26T00:01:00Z'<br><br>opts       = {'logging': True, 'usecache': True, 'cachedir': './hapicache'}<br><br>data, meta = hapi(server, dataset, parameters, start, stop)<br>print(data)</code></pre>",
                 "hint": "Use HAPI's hapitime2datetime() function, and SpacePy's sc.Coords(), Ticktock(), convert() functions."
             },
             {
                 "task_number": 31,
                 "title": "Extract and Plot GITM Data",
-                "description": "Extract 'rho_n' and 'TEC' from a provided GITM run between 2015-03-14 00:00 and 2015-03-14 01:30 along the 'cnofs' satellite trajectory, then functionalize it in Kamodo and plot TEC.",
+                "description": "Extract 'rho_n' and 'TEC' from a provided GITM run between 2015-03-14 00:00 and 2015-03-14 01:30 along the 'cnofs' satellite trajectory, then functionalize it in Kamodo and plot TEC. NOTE: this will require local model output at 'DATA/GITM/GITM_small_test_data/'.",
                 "hint": "Use the SatelliteFlythrough.RealFlight() function."
             },
             {
                 "task_number": 32,
-                "title": "Make a Movie of SDO AIA Solar Imagery",
-                "description": "Make a short movie or loop using 1 day of AIA 0095 A images for the period X-Y.",
+                "title": "Make a Movie of Today's SDO AIA Solar Imagery",
+                "description": "Make a short movie or loop using AIA 0095 A images from midnight today till \"now\".",
                 "hint": "Download files then create a MapSequence from them and animate them."
             },
             {
                 "task_number": 33,
                 "title": "Difference image",
                 "description": "Pick 2 consecutive EUV images from SDO or STEREO and create a difference image (subtract the 2 to see what changed during that time step).",
-                "hint": ""
+                "hint": "Calculate times for selecting pre-flare and post-flare images. Use SunPy's Fido for image retrieval, and then create a difference image by subtracting one from the other to visualize changes."
             }
         ]
     },
     "Rung_5": {
-        "points": 16,
+        "points": 32,
         "tasks": [
             {
                 "task_number": 34,
                 "title": "Interpolating Time",
-                "description": "For analysis, it is often useful to place two datasets that have different timestamps on the same time grid. Starting with a program that reads datasets from two different data servers, write a program that interpolates one dataset onto the time grid of another and create a table or plot that allows one to visually compare the interpolated values with the given values.",
+                "description": "For analysis, it's often useful to align two datasets with different timestamps onto the same time grid. This can be done by various methods such as:<ul><li>Converting HAPI timestamps to datetime objects and then to integers for interpolation, and using functions from NumPy or SciPy for interpolation. Datetime conversion methods can also be employed here.</li><li>Using a Pandas DataFrame's interpolation methods after placing the data within it.</li><li>Employing the 'interpol' function from 'spacepy.toolbox' as demonstrated in the SpacePy tutorial.</li></ul>Begin with a script that reads datasets from two different servers. Perform the following steps:<ol><li>Interpolate 'data2' onto the time grid of 'data0'.</li><li>Create a table or plot for a visual comparison of interpolated and original values.</li><li>Average 'data0' into 1-hour bins and compare with 'data2'.</li></ol>The initial program:<br><pre><code>from hapiclient import hapi, hapitime2datetime<br><br>server     = 'https://cdaweb.gsfc.nasa.gov/hapi'<br>dataset    = 'AC_H0_SWE'<br>parameters = 'Np'<br>start      = '1998-02-04'<br>stop       = '1998-02-06'<br><br>data0, meta0 = hapi(server, dataset, parameters, start, stop)<br>print('data0 = ')<br>print(data0)<br><br>server     = 'https://cdaweb.gsfc.nasa.gov/hapi'<br>dataset    = 'AC_H2_SWE'<br>parameters = 'Np'<br>start      = '1998-02-04'<br>stop       = '1998-02-06'<br><br>data2, meta2 = hapi(server, dataset, parameters, start, stop)<br>print('\\ndata2 = ')<br>print(data2)</code></pre>",
+                "code": "<pre><code>from hapiclient import hapi, hapitime2datetime<br><br>server     = 'https://cdaweb.gsfc.nasa.gov/hapi'<br>dataset    = 'AC_H0_SWE'<br>parameters = 'Np'<br>start      = '1998-02-04'<br>stop       = '1998-02-06'<br><br>data0, meta0 = hapi(server, dataset, parameters, start, stop)<br>print('data0 = ')<br>print(data0)<br><br>server     = 'https://cdaweb.gsfc.nasa.gov/hapi'<br>dataset    = 'AC_H2_SWE'<br>parameters = 'Np'<br>start      = '1998-02-04'<br>stop       = '1998-02-06'<br><br>data2, meta2 = hapi(server, dataset, parameters, start, stop)<br>print('\\ndata2 = ')<br>print(data2)</code></pre>",
                 "hint": "Use one of the interpolation approaches mentioned in the description."
             },
             {
