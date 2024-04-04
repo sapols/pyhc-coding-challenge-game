@@ -34,6 +34,11 @@ button:disabled {
     cursor: not-allowed;
 }
 
+.hint-style {
+    font-style: italic;
+    font-weight: bold;
+}
+
 /**
 .rung-display {
     position: absolute;
