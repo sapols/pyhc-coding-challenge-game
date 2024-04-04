@@ -10,7 +10,7 @@ with open('coding_tasks.json', 'r') as file:
 
 # Example structure for teams_data with current tasks added
 # teams_data = {'team1': {'current_rung': 1, 'points': 0, 'hints': 2, 'skips': 1,
-#                         'completed_tasks': [], 'skipped_tasks': [], 'current_tasks': {1: None, 2: None, 3: None, 4: None, 5: None}}}
+#                         'completed_tasks': [], 'skipped_tasks': [], 'hinted_tasks': [], 'current_tasks': {1: None, 2: None, 3: None, 4: None, 5: None}}}
 teams_data = {}
 
 
@@ -22,9 +22,16 @@ def index():
 @app.route('/api/init/<team_id>', methods=['POST'])
 def init_team(team_id):
     if team_id not in teams_data:
-        teams_data[team_id] = {'current_rung': 1, 'points': 0, 'hints': 2, 'skips': 1,
-                               'completed_tasks': [], 'skipped_tasks': [],
-                               'current_tasks': {1: None, 2: None, 3: None, 4: None, 5: None}}
+        teams_data[team_id] = {
+            'current_rung': 1,
+            'points': 0,
+            'hints': 3,
+            'skips': 2,
+            'completed_tasks': [],
+            'skipped_tasks': [],
+            'hinted_tasks': [],
+            'current_tasks': {1: None, 2: None, 3: None, 4: None, 5: None}
+        }
         return jsonify({'message': f'Team {team_id} initialized.'}), 200
     return jsonify({'message': f'Team {team_id} already exists.'}), 200
 
@@ -43,7 +50,6 @@ def get_tasks(team_id, rung):
                 if task['task_number'] == current_task_number:
                     task['points'] = tasks[rung_key]['points']
                     return jsonify(task), 200
-
 
     # Otherwise, draw a new task avoiding repeats
     rung_key = f'Rung_{rung}'
@@ -70,26 +76,56 @@ def submit_task(team_id, task_number):
                 # Find the rung this task belongs to and reset current task for that rung
                 rung_number = int(rung_key.split('_')[1])
                 teams_data[team_id]['current_tasks'][rung_number] = None
+                print(f"teams_data:\n{teams_data}")  # TODO: DELETE MEE
                 return jsonify(
                     {'message': f"Task submitted successfully for {rung_data['points']} point(s).",
                      'current_points': teams_data[team_id]['points']}), 200
     return jsonify({'error': 'Task not found or already submitted'}), 404
 
 
+# @app.route('/api/hint/<team_id>/<int:task_number>', methods=['POST'])
+# def request_hint(team_id, task_number):
+#     if team_id in teams_data:
+#         # Find the hint for the requested task
+#         for rung_key, rung_data in tasks.items():
+#             for task in rung_data['tasks']:
+#                 if task['task_number'] == task_number:
+#                     # Check if the hint for this task has already been given to the team
+#                     if task_number not in teams_data[team_id]['hinted_tasks']:
+#                         # If the hint has not been given and hints are available, decrement the hint counter
+#                         if teams_data[team_id]['hints'] > 0:
+#                             teams_data[team_id]['hints'] -= 1
+#                             teams_data[team_id]['hinted_tasks'].append(task_number)  # Record that hint has been given for this task
+#                         else:
+#                             # If no hints are available, you might want to return a specific message or handle this scenario differently
+#                             return jsonify({'error': 'No hints left'}), 400
+#                     # Return the hint without decrementing the hint counter if already given
+#                     print(f"teams_data:\n{teams_data}")  # TODO: DELETE MEE
+#                     return jsonify({'hint': task['hint'], 'hints_left': teams_data[team_id]['hints']}), 200
+#     return jsonify({'error': 'Hint not available or task not found'}), 404
+
 @app.route('/api/hint/<team_id>/<int:task_number>', methods=['POST'])
 def request_hint(team_id, task_number):
-    # Logic to decrement a team's hint count and return the hint
-    # Ensure the team exists and has hints left
-    if team_id in teams_data and teams_data[team_id]['hints'] > 0:
-        # Find the hint for the requested task
+    if team_id in teams_data:
         for rung_key, rung_data in tasks.items():
             for task in rung_data['tasks']:
                 if task['task_number'] == task_number:
-                    teams_data[team_id]['hints'] -= 1
-                    print(f"teams_data:\n{teams_data}")  # TODO: DELETE MEE
-                    return jsonify({'hint': task['hint'], 'hints_left': teams_data[team_id]['hints']}), 200
-    print(f"teams_data:\n{teams_data}")  # TODO: DELETE MEE
+                    # Task is already hinted, return the hint without checking hint count
+                    if task_number in teams_data[team_id]['hinted_tasks']:
+                        print(f"teams_data:\n{teams_data}")  # TODO: DELETE MEE
+                        return jsonify({'hint': task['hint'], 'hints_left': teams_data[team_id]['hints']}), 200
+
+                    # If not already hinted and hints are available, decrement and return the hint
+                    if teams_data[team_id]['hints'] > 0:
+                        teams_data[team_id]['hints'] -= 1
+                        teams_data[team_id]['hinted_tasks'].append(task_number)
+                        print(f"teams_data:\n{teams_data}")  # TODO: DELETE MEE
+                        return jsonify({'hint': task['hint'], 'hints_left': teams_data[team_id]['hints']}), 200
+                    else:
+                        # No hints left and task has not been hinted before
+                        return jsonify({'error': 'No hints left'}), 400
     return jsonify({'error': 'Hint not available or task not found'}), 404
+
 
 @app.route('/api/skip/<team_id>/<int:task_number>', methods=['POST'])
 def skip_task(team_id, task_number):

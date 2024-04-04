@@ -3,6 +3,37 @@ let teamId; // Team ID will be set upon page load
 let currentRung = 1; // Start from rung 1
 let highestUnlockedRung = 1; // Initially, only the first rung is unlocked
 
+//// Function to draw a task, modified to use current rung and handle task for specific rung
+//function drawTask() {
+//    const currentTaskDiv = document.getElementById('current-task');
+//    // Check if there's already a task for the current rung
+//    if (currentTasks[currentRung] !== null) {
+//        // If so, directly use the task ID stored in currentTasks to fetch and display the task details
+//        fetch(`/api/tasks/${teamId}/${currentRung}`)
+//            .then(response => response.json())
+//            .then(task => {
+//                // Assuming the backend returns task details directly
+//                const pointsStr = task.points === 1 ? "1 pt" : `${task.points} pts`;
+//                currentTaskDiv.innerHTML = `<h2>${task.title} [${pointsStr}]</h2><p>${task.description}</p><button onclick="submitTask(${task.task_number})">Submit Task</button>`;
+//                updateRungDisplay(); // Update the rung display based on the current rung status
+//            })
+//            .catch(error => console.error('Error fetching current task:', error));
+//    } else {
+//        // If no current task, request a new task from the server
+//        fetch(`/api/tasks/${teamId}/${currentRung}`)
+//            .then(response => response.json())
+//            .then(task => {
+//                currentTasks[currentRung] = task.task_number; // Update current task for the rung
+//                // Display the fetched task details as before
+//                const pointsStr = task.points === 1 ? "1 pt" : `${task.points} pts`;
+//                currentTaskDiv.innerHTML = `<h2>${task.title} [${pointsStr}]</h2><p>${task.description}</p><button onclick="submitTask(${task.task_number})">Submit Task</button>`;
+//                updateRungDisplay(); // Ensure rung display is updated
+//            })
+//            .catch(error => console.error('Error fetching new task:', error));
+//    }
+//    document.getElementById('draw-task').disabled = true; // Disable the button after the first press
+//}
+
 // Function to draw a task, modified to use current rung and handle task for specific rung
 function drawTask() {
     const currentTaskDiv = document.getElementById('current-task');
@@ -12,24 +43,40 @@ function drawTask() {
         fetch(`/api/tasks/${teamId}/${currentRung}`)
             .then(response => response.json())
             .then(task => {
-                // Assuming the backend returns task details directly
-                const pointsStr = task.points === 1 ? "1 pt" : `${task.points} pts`;
-                currentTaskDiv.innerHTML = `<h2>${task.title} [${pointsStr}]</h2><p>${task.description}</p><button onclick="submitTask(${task.task_number})">Submit Task</button>`;
+                if (task.error) { // Check if an error message was returned instead of task details
+                    currentTaskDiv.innerHTML = `<h2>No tasks left in this rung!</h2>`;
+                    document.getElementById('draw-task').disabled = true; // Optionally disable drawing a new task for this rung
+                } else {
+                    // Assuming the backend returns task details directly
+                    const pointsStr = task.points === 1 ? "1 pt" : `${task.points} pts`;
+                    currentTaskDiv.innerHTML = `<h2>${task.title} [${pointsStr}]</h2><p>${task.description}</p><button onclick="submitTask(${task.task_number})">Submit Task</button>`;
+                }
                 updateRungDisplay(); // Update the rung display based on the current rung status
             })
-            .catch(error => console.error('Error fetching current task:', error));
+            .catch(error => {
+                console.error('Error fetching current task:', error);
+                currentTaskDiv.innerHTML = `<h2>Error fetching tasks. Please try again later.</h2>`;
+            });
     } else {
         // If no current task, request a new task from the server
         fetch(`/api/tasks/${teamId}/${currentRung}`)
             .then(response => response.json())
             .then(task => {
-                currentTasks[currentRung] = task.task_number; // Update current task for the rung
-                // Display the fetched task details as before
-                const pointsStr = task.points === 1 ? "1 pt" : `${task.points} pts`;
-                currentTaskDiv.innerHTML = `<h2>${task.title} [${pointsStr}]</h2><p>${task.description}</p><button onclick="submitTask(${task.task_number})">Submit Task</button>`;
+                if (task.error) { // Handle case when no more tasks are available for this rung
+                    currentTaskDiv.innerHTML = `<h2>No tasks left in this rung!</h2>`;
+                    document.getElementById('draw-task').disabled = true; // Optionally disable drawing a new task for this rung
+                } else {
+                    currentTasks[currentRung] = task.task_number; // Update current task for the rung
+                    // Display the fetched task details
+                    const pointsStr = task.points === 1 ? "1 pt" : `${task.points} pts`;
+                    currentTaskDiv.innerHTML = `<h2>${task.title} [${pointsStr}]</h2><p>${task.description}</p><button onclick="submitTask(${task.task_number})">Submit Task</button>`;
+                }
                 updateRungDisplay(); // Ensure rung display is updated
             })
-            .catch(error => console.error('Error fetching new task:', error));
+            .catch(error => {
+                console.error('Error fetching new task:', error);
+                currentTaskDiv.innerHTML = `<h2>Error fetching tasks. Please try again later.</h2>`;
+            });
     }
     document.getElementById('draw-task').disabled = true; // Disable the button after the first press
 }
@@ -46,7 +93,7 @@ function submitTask(taskNumber) {
             .then(data => {
                 alert(`${data.message}\nTotal points: ${data.current_points}`);
                 // Update team points display and reset current task for the current rung
-                document.getElementById('team-points').textContent = `Team Points: ${data.current_points}`;
+                document.getElementById('team-points').textContent = `${teamId} Points: ${data.current_points}`;
                 currentTasks[currentRung] = null; // Clear the current task for the rung upon successful submission
                 currentRung = Math.min(currentRung + 1, 5); // Advance to the next rung, max out at 5
                 highestUnlockedRung = Math.max(highestUnlockedRung, currentRung); // Update the highest unlocked rung
@@ -61,26 +108,52 @@ function submitTask(taskNumber) {
 }
 
 // Function to request a hint for the current task
+//function requestHint() {
+//    if (currentTasks[currentRung] !== null) {
+//        fetch(`/api/hint/${teamId}/${currentTasks[currentRung]}`, { method: 'POST' })
+//            .then(response => response.json())
+//            .then(data => {
+//                if (data.hint) {
+//                    alert(`Hint: ${data.hint}\nHints left: ${data.hints_left}`);
+//                    if (data.hints_left === 0) {
+//                        document.getElementById('get-hint').disabled = true;
+//                        document.getElementById('get-hint').style.backgroundColor = '#ccc';
+//                    }
+//                } else {
+//                    alert("No hint available for this task :( Complain to Shawn.\n\nNote your hint counter likely still decremented which can break this button...");
+//                }
+//            })
+//            .catch(error => console.error('Error requesting hint:', error));
+//    } else {
+//        alert("No task selected to request a hint for.");
+//    }
+//}
+
 function requestHint() {
     if (currentTasks[currentRung] !== null) {
         fetch(`/api/hint/${teamId}/${currentTasks[currentRung]}`, { method: 'POST' })
-            .then(response => response.json())
-            .then(data => {
-                if (data.hint) {
-                    alert(`Hint: ${data.hint}\nHints left: ${data.hints_left}`);
-                    if (data.hints_left === 0) {
-                        document.getElementById('get-hint').disabled = true;
-                        document.getElementById('get-hint').style.backgroundColor = '#ccc';
-                    }
-                } else {
-                    alert("No hint available for this task :( Complain to Shawn.\n\nNote your hint counter likely still decremented which can break this button...");
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('No hints left');
                 }
+                return response.json();
             })
-            .catch(error => console.error('Error requesting hint:', error));
+            .then(data => {
+                alert(`Hint: ${data.hint}\nHints left: ${data.hints_left}`);
+            })
+            .catch(error => {
+                console.error('Error requesting hint:', error);
+                if (error.message === 'No hints left') {
+                    document.getElementById('get-hint').disabled = true;
+                    document.getElementById('get-hint').style.backgroundColor = '#ccc';
+                    alert("No more hints available.");
+                }
+            });
     } else {
         alert("No task selected to request a hint for.");
     }
 }
+
 
 // Skipping a task, now ensuring it fetches a new task for the current rung
 function skipCurrentTask() {
@@ -149,7 +222,6 @@ document.addEventListener('DOMContentLoaded', function promptForTeamName() {
     // Prompt for team name and initialize team data
     teamId = prompt("Please enter your team name (no spaces):", "team1");
     if (teamId) {
-        document.getElementById('team-points').textContent = `Team Points: 0`;
         // Initialize or retrieve team data from the backend
         fetch(`/api/init/${teamId}`, { method: 'POST' })
             .then(response => response.json())
