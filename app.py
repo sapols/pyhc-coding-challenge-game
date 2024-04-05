@@ -20,6 +20,11 @@ def index():
     return send_from_directory('static', 'index.html')
 
 
+@app.route('/dashboard')
+def dashboard():
+    return send_from_directory('static', 'dashboard.html')
+
+
 @app.route('/api/init/<team_id>', methods=['POST'])
 def init_team(team_id):
     if team_id not in teams_data:
@@ -35,6 +40,11 @@ def init_team(team_id):
         }
         return jsonify({'message': f'Team {team_id} initialized.'}), 200
     return jsonify({'message': f'Team {team_id} already exists.'}), 200
+
+
+@app.route('/api/all_team_data', methods=['GET'])
+def get_all_team_data():
+    return jsonify(teams_data)
 
 
 @app.route('/api/team_data/<team_id>', methods=['GET'])
