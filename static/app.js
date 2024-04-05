@@ -49,7 +49,7 @@ function drawTask() {
                 currentTaskDiv.innerHTML = `<h2>Error fetching tasks. Please try again later.</h2>`;
             });
     }
-    document.getElementById('draw-task').disabled = true; // Disable the button after the first press
+    document.getElementById('draw-task').style.display = 'none'; // Remove the button after the first press
     document.getElementById('submit-task').style.display = 'block'; // Show the "Submit Task" button after the first press
     syncTeamData();
     saveGameState();
