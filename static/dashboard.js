@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", function() {
-// TODO: Sort by points, then rung, then name (alphabetically)
-// TODO: After pressing "Start Timer" the button should toggle to a "Pause Timer" button
-    const startTimerButton = document.getElementById('start-timer');
+    const startTimerButton = document.getElementById('timer-button');
     const timerDisplay = document.getElementById('timer');
 
     // Initialize variables for the timer
     let intervalId;
     const duration = 90 * 60; // 90 minutes in seconds
+    let timerRunning = false; // Tracks whether the timer is running
+    let timeRemaining = duration; // Track the remaining time
 
-    // Start timer function adapted from your provided snippet
-    function startTimer(duration, display) {
+    // Starts the game timer
+     function startTimer(duration, display) {
         let timer = duration, minutes, seconds;
         intervalId = setInterval(function () {
             minutes = parseInt(timer / 60, 10);
@@ -22,16 +22,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (--timer < 0) {
                 clearInterval(intervalId);
-                alert("Time's up! Please submit your final task.");
+                intervalId = null;
+                timerRunning = false;
+                alert("Time's up! Thanks for playing.");
+                document.getElementById('timer-button').disabled = true;
             }
+            timeRemaining = timer; // Update the remaining time
         }, 1000);
     }
 
-    // Attach the event listener to the start button
+    // Pauses the game timer
+    function pauseTimer() {
+        clearInterval(intervalId);
+        intervalId = null;
+        timerRunning = false;
+        startTimerButton.textContent = 'Start Timer'; // Change button text back to "Start Timer"
+    }
+
+    // Attach the event listener to the start/pause button
     startTimerButton.addEventListener('click', function() {
-        // Prevent starting the timer multiple times
-        if (!intervalId) {
-            startTimer(duration, timerDisplay);
+        if (!timerRunning) {
+            startTimer(timeRemaining, timerDisplay); // Start or resume from the last timeRemaining
+            startTimerButton.textContent = 'Pause Timer'; // Change button text to "Pause Timer"
+            timerRunning = true;
+        } else {
+            pauseTimer(); // Pause the timer if it's running
         }
     });
 
@@ -43,26 +58,30 @@ document.addEventListener("DOMContentLoaded", function() {
             const teamsInfoContainer = document.getElementById('teams-info');
             teamsInfoContainer.innerHTML = ''; // Clear the container
 
-            // Convert object to array and sort by points, descending
+            // Convert object to array and sort by points then rung then name, descending
             const sortedTeams = Object.entries(data).sort((a, b) => {
+                // First, sort by points, descending
                 const pointsDifference = b[1].points - a[1].points;
-                if (pointsDifference === 0) { // If points are equal, sort by team name
-                    return a[0].localeCompare(b[0]);
-                }
-                return pointsDifference;
+                if (pointsDifference !== 0) return pointsDifference;
+
+                // Next, if points are equal, sort by rung, descending
+                const rungDifference = b[1].current_rung - a[1].current_rung;
+                if (rungDifference !== 0) return rungDifference;
+
+                // Finally, if rungs are also equal, sort by team name, alphabetically
+                return a[0].localeCompare(b[0]);
             });
 
             // Iterate through each sorted team and display their information
             sortedTeams.forEach(([teamName, teamData]) => {
                 const teamDiv = document.createElement('div');
                 teamDiv.className = 'team-info'; // For styling, if needed
-                teamDiv.innerHTML = `<strong>${teamName}</strong>: Points: ${teamData.points}, Current Rung: ${teamData.current_rung}`;
+                teamDiv.innerHTML = `<strong>${teamName}</strong>: Points: ${teamData.points}, Rung: ${teamData.current_rung}`;
                 teamsInfoContainer.appendChild(teamDiv);
             });
         })
         .catch(error => console.error('Error fetching team data:', error));
     }
-
 
     // Set an interval to periodically update team data
     setInterval(updateTeamData, 5000); // Update every 5 seconds
