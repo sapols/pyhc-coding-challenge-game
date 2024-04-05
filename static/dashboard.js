@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-// TODO: Sort teams display by points, highest to lowest?
 // TODO: Fix back-end bug where current-rung never updates
     const startTimerButton = document.getElementById('start-timer');
     const timerDisplay = document.getElementById('timer');
