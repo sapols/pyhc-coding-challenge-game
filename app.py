@@ -124,28 +124,6 @@ def request_hint(team_id, task_number):
                     return jsonify({'hint': task['hint'], 'hints_left': teams_data[team_id]['hints']}), 200
     return jsonify({'error': 'Hint not available or task not found'}), 404
 
-# @app.route('/api/hint/<team_id>/<int:task_number>', methods=['POST'])
-# def request_hint(team_id, task_number):
-#     if team_id in teams_data:
-#         for rung_key, rung_data in tasks.items():
-#             for task in rung_data['tasks']:
-#                 if task['task_number'] == task_number:
-#                     # Task is already hinted, return the hint without checking hint count
-#                     if task_number in teams_data[team_id]['hinted_tasks']:
-#                         print(f"teams_data:\n{teams_data}")  # TODO: DELETE MEE
-#                         return jsonify({'hint': task['hint'], 'hints_left': teams_data[team_id]['hints']}), 200
-#
-#                     # If not already hinted and hints are available, decrement and return the hint
-#                     if teams_data[team_id]['hints'] > 0:
-#                         teams_data[team_id]['hints'] -= 1
-#                         teams_data[team_id]['hinted_tasks'].append(task_number)
-#                         print(f"teams_data:\n{teams_data}")  # TODO: DELETE MEE
-#                         return jsonify({'hint': task['hint'], 'hints_left': teams_data[team_id]['hints']}), 200
-#                     else:
-#                         # No hints left and task has not been hinted before
-#                         return jsonify({'error': 'No hints left'}), 400
-#     return jsonify({'error': 'Hint not available or task not found'}), 404
-
 
 @app.route('/api/skip/<team_id>/<int:task_number>', methods=['POST'])
 def skip_task(team_id, task_number):
@@ -165,6 +143,18 @@ def skip_task(team_id, task_number):
         return jsonify({'message': 'Task skipped.', 'skips_left': teams_data[team_id]['skips']}), 200
     print(f"teams_data:\n{teams_data}")  # TODO: DELETE MEE
     return jsonify({'error': 'No skips left'}), 404
+
+
+@app.route('/api/update_rung/<team_id>/<int:new_rung>', methods=['POST'])
+def update_current_rung(team_id, new_rung):
+    if team_id in teams_data:
+        if 1 <= new_rung <= 5:  # Assuming you have 5 rungs as the max
+            teams_data[team_id]['current_rung'] = new_rung
+            return jsonify({'message': 'Current rung updated successfully.'}), 200
+        else:
+            return jsonify({'error': 'Invalid rung number.'}), 400
+    else:
+        return jsonify({'error': 'Team not found'}), 404
 
 
 @app.route('/api/verify_passcode/<passcode>', methods=['POST'])

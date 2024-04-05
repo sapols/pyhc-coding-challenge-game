@@ -214,6 +214,7 @@ function submitTask(taskNumber) {
                             currentTasks[currentRung] = null; // Clear the current task for the rung upon successful submission
                             currentRung = Math.min(currentRung + 1, 5); // Advance to the next rung, max out at 5
                             highestUnlockedRung = Math.max(highestUnlockedRung, currentRung); // Update the highest unlocked rung
+                            updateBackendRung();
                             drawTask(); // Draw a new task from the next rung
                         })
                         .catch(error => console.error('Error submitting task:', error));
@@ -232,24 +233,39 @@ function submitTask(taskNumber) {
     saveGameState();
 }
 
-//// Function to request a hint for the current task
+//// Function to request a hint for the current task (THIS WAS THE ONE BEFORE CHECKING IF HINT ALREADY DISPLAYED)
 //function requestHint() {
 //    if (currentTasks[currentRung] !== null) {
 //        fetch(`/api/hint/${teamId}/${currentTasks[currentRung]}`, { method: 'POST' })
 //            .then(response => response.json())
 //            .then(data => {
 //                if (data.hint) {
-//                    alert(`Hint: ${data.hint}\nHints left: ${data.hints_left}`);
+//                    // Select the current task div
+//                    const currentTaskDiv = document.getElementById('current-task');
+//                    // Create a new paragraph element for the hint
+//                    const hintPara = document.createElement('p');
+//                    hintPara.className = 'hint'; // Assign a class to the hint paragraph
+//                    hintPara.innerHTML = `Hint: ${data.hint}`; // Use innerHTML in case you want to include HTML formatting in the future
+//                    currentTaskDiv.appendChild(hintPara); // Append the hint paragraph to the current task div
+//
+//                    // Display hints left (Use setTimeout to let hint text display before showing the alert)
+//                    setTimeout(() => {
+//                        alert(`Hints left: ${data.hints_left}`);
+//                    }, 20); // A delay of 10 milliseconds is usually enough to allow the DOM update to render
+//
+//                    // Disable the get hint button if no hints are left
 //                    if (data.hints_left === 0) {
 //                        document.getElementById('get-hint').disabled = true;
 //                        document.getElementById('get-hint').style.backgroundColor = '#ccc';
 //                    }
 //                } else {
-//                    alert("No hint available for this task :( Complain to Shawn.\n\nNote your hint counter likely still decremented which can break this button...");
+//                    // Handle the case where no hint is available
+//                    alert("No hint available for this task. Note your hint counter likely still decremented which can break this button...");
 //                }
 //            })
 //            .catch(error => console.error('Error requesting hint:', error));
 //    } else {
+//        // If no current task is selected to request a hint for
 //        alert("No task selected to request a hint for.");
 //    }
 //    syncTeamData();
@@ -259,34 +275,40 @@ function submitTask(taskNumber) {
 // Function to request a hint for the current task
 function requestHint() {
     if (currentTasks[currentRung] !== null) {
-        fetch(`/api/hint/${teamId}/${currentTasks[currentRung]}`, { method: 'POST' })
-            .then(response => response.json())
-            .then(data => {
-                if (data.hint) {
-                    // Select the current task div
-                    const currentTaskDiv = document.getElementById('current-task');
-                    // Create a new paragraph element for the hint
-                    const hintPara = document.createElement('p');
-                    hintPara.className = 'hint-style'; // Assign a class to the hint paragraph
-                    hintPara.innerHTML = `Hint: ${data.hint}`; // Use innerHTML in case you want to include HTML formatting in the future
-                    currentTaskDiv.appendChild(hintPara); // Append the hint paragraph to the current task div
+        // Check if the hint is already displayed
+        const existingHint = document.querySelector('.hint');
+        if (!existingHint) { // Only proceed if no hint is currently displayed
+            fetch(`/api/hint/${teamId}/${currentTasks[currentRung]}`, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.hint) {
+                        // Select the current task div
+                        const currentTaskDiv = document.getElementById('current-task');
+                        // Create a new paragraph element for the hint
+                        const hintPara = document.createElement('p');
+                        hintPara.className = 'hint'; // Assign a class to the hint paragraph
+                        hintPara.innerHTML = `Hint: ${data.hint}`; // Use innerHTML in case you want to include HTML formatting in the future
+                        currentTaskDiv.appendChild(hintPara); // Append the hint paragraph to the current task div
 
-                    // Display hints left (Use setTimeout to let hint text display before showing the alert)
-                    setTimeout(() => {
-                        alert(`Hints left: ${data.hints_left}`);
-                    }, 20); // A delay of 10 milliseconds is usually enough to allow the DOM update to render
+                        // Display hints left (Use setTimeout to let hint text display before showing the alert)
+                        setTimeout(() => {
+                            alert(`Hints left: ${data.hints_left}`);
+                        }, 20); // A delay of 10 milliseconds is usually enough to allow the DOM update to render
 
-                    // Disable the get hint button if no hints are left
-                    if (data.hints_left === 0) {
-                        document.getElementById('get-hint').disabled = true;
-                        document.getElementById('get-hint').style.backgroundColor = '#ccc';
+                        // Disable the get hint button if no hints are left
+                        if (data.hints_left === 0) {
+                            document.getElementById('get-hint').disabled = true;
+                            document.getElementById('get-hint').style.backgroundColor = '#ccc';
+                        }
+                    } else {
+                        // Handle the case where no hint is available
+                        alert("No hint available for this task. Note your hint counter likely still decremented which can break this button...");
                     }
-                } else {
-                    // Handle the case where no hint is available
-                    alert("No hint available for this task. Note your hint counter likely still decremented which can break this button...");
-                }
-            })
-            .catch(error => console.error('Error requesting hint:', error));
+                })
+                .catch(error => console.error('Error requesting hint:', error));
+        } else {
+            alert("Hint already displayed.");
+        }
     } else {
         // If no current task is selected to request a hint for
         alert("No task selected to request a hint for.");
@@ -295,33 +317,6 @@ function requestHint() {
     saveGameState();
 }
 
-
-//function requestHint() {
-//    if (currentTasks[currentRung] !== null) {
-//        fetch(`/api/hint/${teamId}/${currentTasks[currentRung]}`, { method: 'POST' })
-//            .then(response => {
-//                if (!response.ok) {
-//                    throw new Error('No hints left');
-//                }
-//                return response.json();
-//            })
-//            .then(data => {
-//                alert(`Hint: ${data.hint}\nHints left: ${data.hints_left}`);
-//            })
-//            .catch(error => {
-//                console.error('Error requesting hint:', error);
-//                if (error.message === 'No hints left') {
-//                    document.getElementById('get-hint').disabled = true;
-//                    document.getElementById('get-hint').style.backgroundColor = '#ccc';
-//                    alert("No more hints available.");
-//                }
-//            });
-//    } else {
-//        alert("No task selected to request a hint for.");
-//    }
-//    syncTeamData();
-//    saveGameState();
-//}
 
 
 // Skipping a task, now ensuring it fetches a new task for the current rung
@@ -368,6 +363,7 @@ function startTimer(duration, display) {
 function selectRung(selectedRung) {
     if (selectedRung <= highestUnlockedRung) {
         currentRung = selectedRung;
+        updateBackendRung();
         drawTask(); // Draw task for newly selected rung
     } else {
         alert("This rung is locked. Complete tasks to unlock higher rungs.");
@@ -390,6 +386,19 @@ function updateRungDisplay() {
     }
     //syncTeamData();
     saveGameState();
+}
+
+function updateBackendRung() {
+    fetch(`/api/update_rung/${teamId}/${currentRung}`, { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                console.log(data.message);
+            } else if (data.error) {
+                console.error(data.error);
+            }
+        })
+        .catch(error => console.error('Error updating current rung in backend:', error));
 }
 
 function saveGameState() {

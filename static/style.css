@@ -34,19 +34,10 @@ button:disabled {
     cursor: not-allowed;
 }
 
-.hint-style {
+.hint {
     font-style: italic;
     font-weight: bold;
 }
-
-/**
-.rung-display {
-    position: absolute;
-    right: 60px;
-    top: 60px;
-    font-size: 20px;
-}
-**/
 
 #rungs-container {
     position: absolute;
