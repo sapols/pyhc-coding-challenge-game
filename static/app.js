@@ -99,6 +99,7 @@ function submitTask(taskNumber) {
     saveGameState();
 }
 
+
 // Function to request a hint for the current task
 function requestHint() {
     if (currentTasks[currentRung] !== null) {
@@ -145,7 +146,6 @@ function requestHint() {
 }
 
 
-
 // Skipping a task, now ensuring it fetches a new task for the current rung
 function skipCurrentTask() {
     if (currentTasks[currentRung] !== null) {
@@ -165,6 +165,7 @@ function skipCurrentTask() {
     syncTeamData();
     saveGameState();
 }
+
 
 function syncTeamData() {
     fetch(`/api/team_data/${teamId}`)
@@ -191,6 +192,7 @@ function syncTeamData() {
         .catch(error => console.error('Error syncing team data:', error));
 }
 
+
 // Functionality to select a different rung and fetch the task for that rung
 function selectRung(selectedRung) {
     if (selectedRung <= highestUnlockedRung) {
@@ -203,6 +205,7 @@ function selectRung(selectedRung) {
     //syncTeamData();
     saveGameState();
 }
+
 
 function updateRungDisplay() {
     for (let i = 1; i <= 5; i++) {
@@ -220,6 +223,7 @@ function updateRungDisplay() {
     saveGameState();
 }
 
+
 function updateBackendRung() {
     fetch(`/api/update_rung/${teamId}/${currentRung}`, { method: 'POST' })
         .then(response => response.json())
@@ -233,6 +237,7 @@ function updateBackendRung() {
         .catch(error => console.error('Error updating current rung in backend:', error));
 }
 
+
 function saveGameState() {
     const gameState = {
         teamId,
@@ -243,6 +248,7 @@ function saveGameState() {
     };
     sessionStorage.setItem('pyhcGameState', JSON.stringify(gameState));
 }
+
 
 function loadGameState() {
     const savedState = sessionStorage.getItem('pyhcGameState');
@@ -262,6 +268,7 @@ function loadGameState() {
         }
     }
 }
+
 
 document.addEventListener('DOMContentLoaded', function initializeOrLoadGame() {
     function promptForTeamName() {
