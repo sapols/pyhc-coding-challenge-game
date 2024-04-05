@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-// TODO: Fix back-end bug where current-rung never updates
+// TODO: Sort by points, then rung, then name (alphabetically)
+// TODO: After pressing "Start Timer" the button should toggle to a "Pause Timer" button
     const startTimerButton = document.getElementById('start-timer');
     const timerDisplay = document.getElementById('timer');
 
