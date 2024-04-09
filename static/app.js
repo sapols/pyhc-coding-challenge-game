@@ -75,7 +75,7 @@ function submitTask(taskNumber) {
                     fetch(`/api/submit/${teamId}/${taskNumber}`, { method: 'POST' })
                         .then(response => response.json())
                         .then(data => {
-                            alert(`${data.message}\nTotal points: ${data.current_points}`);
+                            alert(`${data.message}`);
                             // Update team points display and reset current task for the current rung
                             document.getElementById('team-points').innerHTML = `${teamId} Points: <b>${data.current_points}</b>`;
                             currentTasks[currentRung] = null; // Clear the current task for the rung upon successful submission
@@ -162,6 +162,9 @@ function skipCurrentTask() {
                 drawTask(); // Draw a new task for the current rung
             })
             .catch(error => console.error('Error skipping task:', error));
+    } else {
+        // If no current task is selected to skip
+        alert("No task selected to skip.");
     }
     syncTeamData();
     saveGameState();

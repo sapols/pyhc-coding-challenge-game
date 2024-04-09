@@ -97,8 +97,10 @@ def submit_task(team_id, task_number):
                 rung_number = int(rung_key.split('_')[1])
                 teams_data[team_id]['current_tasks'][rung_number] = None
                 print(f"teams_data:\n{teams_data}")  # TODO: DELETE MEE
+                # Determine the correct singular or plural form of "point"
+                points_word = "point" if rung_data['points'] == 1 else "points"
                 return jsonify(
-                    {'message': f"Task submitted successfully for {rung_data['points']} point(s).",
+                    {'message': f"Task submitted successfully for {rung_data['points']} {points_word}.",
                      'current_points': teams_data[team_id]['points']}), 200
     return jsonify({'error': 'Task not found or already submitted'}), 404
 
