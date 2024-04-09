@@ -20,7 +20,7 @@ function drawTask() {
                 } else {
                     // Assuming the backend returns task details directly
                     const pointsStr = task.points === 1 ? "1 pt" : `${task.points} pts`;
-                    currentTaskDiv.innerHTML = `<h2>${task.title} [${pointsStr}]</h2><p>${task.description}</p>`;
+                    currentTaskDiv.innerHTML = `<span class="task-points">${pointsStr}</span><h2>${task.title}</h2><p>${task.description}</p>`;
                 }
                 updateRungDisplay(); // Update the rung display based on the current rung status
             })
@@ -40,7 +40,7 @@ function drawTask() {
                     currentTasks[currentRung] = task.task_number; // Update current task for the rung
                     // Display the fetched task details
                     const pointsStr = task.points === 1 ? "1 pt" : `${task.points} pts`;
-                    currentTaskDiv.innerHTML = `<h2>${task.title} [${pointsStr}]</h2><p>${task.description}</p>`;
+                    currentTaskDiv.innerHTML = `<span class="task-points">${pointsStr}</span><h2>${task.title}</h2><p>${task.description}</p>`;
                 }
                 updateRungDisplay(); // Ensure rung display is updated
             })
@@ -77,7 +77,7 @@ function submitTask(taskNumber) {
                         .then(data => {
                             alert(`${data.message}\nTotal points: ${data.current_points}`);
                             // Update team points display and reset current task for the current rung
-                            document.getElementById('team-points').textContent = `${teamId} Points: ${data.current_points}`;
+                            document.getElementById('team-points').innerHTML = `${teamId} Points: <b>${data.current_points}</b>`;
                             currentTasks[currentRung] = null; // Clear the current task for the rung upon successful submission
                             currentRung = Math.min(currentRung + 1, 5); // Advance to the next rung, max out at 5
                             highestUnlockedRung = Math.max(highestUnlockedRung, currentRung); // Update the highest unlocked rung
@@ -176,7 +176,7 @@ function syncTeamData() {
             teamData = data;
 
             // Update points
-            document.getElementById('team-points').textContent = `${teamId} Points: ${data.points}`;
+            document.getElementById('team-points').innerHTML = `${teamId} Points: <b>${data.points}</b>`;
 
             // Update the button texts with the current number of hints and skips
             document.getElementById('get-hint').textContent = `Get Hint (${data.hints})`;
@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function initializeOrLoadGame() {
             }
         });
 
-        document.getElementById('team-points').textContent = `${teamId} Points: 0`; // Initialize team points with team name
+        document.getElementById('team-points').innerHTML = `${teamId} Points: <b>0</b>`; // Initialize team points with team name
         document.getElementById('get-hint').addEventListener('click', requestHint);
         document.getElementById('skip-task').addEventListener('click', skipCurrentTask);
 

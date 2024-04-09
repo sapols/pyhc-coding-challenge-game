@@ -33,6 +33,7 @@ body, html {
 }
 
 #current-task {
+    position: relative; /* Add this to make sure absolute positioning is relative to this container */
     display: none;
     background-color: rgba(255, 255, 255, 0.1);
     padding: 20px;
@@ -41,6 +42,19 @@ body, html {
     font-size: 18px;
     box-shadow: inset 1px 4px 6px rgba(0,0,0,0.4);
     overflow-x: scroll;
+}
+
+.task-points {
+    position: absolute; /* Change this from relative to absolute */
+    top: 10px; /* Position from the top of the #current-task div */
+    right: 10px; /* Position from the right of the #current-task div */
+    background-color: #ff9500;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 8px;
+    z-index: 10; /* Ensure it's above other content if necessary */
 }
 
 #current-task p,pre {
@@ -74,7 +88,13 @@ pre {
 
 #team-points {
     font-size: 18px;
-    font-weight: 500;
+    /* font-weight: 500; */
+    color: #dedede;
+}
+
+#team-points b {
+    font-size: 24px;
+    color: #ffffff;
 }
 
 button {
