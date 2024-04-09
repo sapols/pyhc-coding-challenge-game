@@ -26,7 +26,8 @@ body, html {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     min-height: 385px;
     min-width: 700px;
-    max-width: 800px;
+    /* max-width: 800px; */
+    max-width: 75%;
     color: #fff;
     box-shadow: 1px 7px 8px rgba(0, 0, 0, 0.68);
     margin-right: 10px;
