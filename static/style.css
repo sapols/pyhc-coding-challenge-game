@@ -118,7 +118,7 @@ button:hover {
 }
 
 button:disabled {
-    background-color: #333;
+    background-color: #333 !important;
     cursor: not-allowed;
     transform: none;
 }
@@ -187,7 +187,7 @@ button:disabled {
 }
 
 .rung-btn.active-disabled {
-    background-color: #ff9500;
+    background-color: #ff9500 !important;
     color: white;
     cursor: default;
 }
