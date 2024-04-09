@@ -143,11 +143,9 @@ button:disabled {
     border-radius: 24px;
     box-shadow: 1px 7px 8px rgba(0, 0, 0, 0.68);
     width: 80px;
-    margin-bottom: 20px; /* Add some margin to separate the rungs container from the logo */
 }
 
 .rungs-title {
-    /* margin-bottom: 10px; */
     text-align: center;
     color: #fff;
     font-size: 18px;
@@ -197,6 +195,7 @@ button:disabled {
 }
 
 #app-logo {
-    width: 60px;
+    margin-top: 15px;  /* Add some margin to separate the rungs container from the logo */
+    width: 70px;
     height: auto;
 }
