@@ -7,29 +7,33 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div id="app">
-        <div id="rungs-container">
-            <h3 class="rungs-title">Rungs</h3>
-            <button class="rung-btn" id="rung-5" onclick="selectRung(5)">5</button>
-            <button class="rung-btn" id="rung-4" onclick="selectRung(4)">4</button>
-            <button class="rung-btn" id="rung-3" onclick="selectRung(3)">3</button>
-            <button class="rung-btn" id="rung-2" onclick="selectRung(2)">2</button>
-            <button class="rung-btn" id="rung-1" onclick="selectRung(1)">1</button>
+    <div id="app-container">
+        <div id="app">
+            <h1>PyHC Challenge Ladder</h1>
+            <div id="team-info">
+                <span id="team-points">Team Points: 0</span>
+                <br><br>
+                <button id="get-hint">Get Hint</button>
+                <button id="skip-task">Skip Task</button>
+            </div>
+            <div id="tasks-container">
+                <button id="draw-task">Draw Task</button>
+                <div id="current-task"></div>
+                <button id="submit-task" style="display: none;" onclick="submitTask(currentTasks[currentRung])">Submit Task</button>
+            </div>
         </div>
-        <h1>PyHC Challenge Ladder</h1>
-        <div id="team-info">
-            <span id="team-points">Team Points: 0</span>
-            <br><br>
-            <button id="get-hint">Get Hint</button>
-            <button id="skip-task">Skip Task</button>
-        </div>
-        <div id="tasks-container">
-            <button id="draw-task">Draw Task</button>
-            <div id="current-task"></div>
-            <button id="submit-task" style="display: none;" onclick="submitTask(currentTasks[currentRung])">Submit Task</button>
+        <div id="rungs-and-logo-container">
+            <div id="rungs-container">
+                <h3 class="rungs-title">Rungs</h3>
+                <button class="rung-btn" id="rung-5" onclick="selectRung(5)">5</button>
+                <button class="rung-btn" id="rung-4" onclick="selectRung(4)">4</button>
+                <button class="rung-btn" id="rung-3" onclick="selectRung(3)">3</button>
+                <button class="rung-btn" id="rung-2" onclick="selectRung(2)">2</button>
+                <button class="rung-btn" id="rung-1" onclick="selectRung(1)">1</button>
+            </div>
+            <img id="app-logo" src="/static/img/logo.png" alt="Logo">
         </div>
     </div>
-    <img id="app-logo" src="/static/img/logo.png" alt="Logo">
     <script src="/static/app.js"></script>
 </body>
 </html>

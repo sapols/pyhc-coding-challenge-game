@@ -1,78 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600&display=swap');
+
 body, html {
-    font-family: Arial, sans-serif;
-    padding: 20px;
+    font-family: 'Inter', sans-serif;
+    padding: 0;
     margin: 0;
-    background-color: #f0f0f0;
+    background: url('/static/img/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+}
+
+#app-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 40px;
 }
 
 #app {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background: rgba(34, 34, 34, 0.75);
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    padding: 5px 40px 40px 40px;
+    border-radius: 24px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    min-height: 385px;
+    min-width: 700px;
+    max-width: 800px;
+    color: #fff;
+    box-shadow: 1px 7px 8px rgba(0, 0, 0, 0.68);
+    margin-right: 10px;
 }
 
-#timer, #team-info, #tasks-container {
+#current-task {
+    display: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    font-size: 18px;
+    box-shadow: inset 1px 4px 6px rgba(0,0,0,0.4);
+    overflow-x: scroll;
+}
+
+#current-task p,pre {
+    color: #dedede;
+}
+
+h1 {
+    font-family: 'Orbitron';
+    font-size: 34px;
+    font-weight: 600;
+    text-align: center;
     margin-bottom: 20px;
+    color: #fff;
+}
+
+h2 {
+    font-size: 23px;
+}
+
+p {
+    font-size: 16px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+#team-info {
+    margin-bottom: 30px;
+}
+
+#team-points {
+    font-size: 18px;
+    font-weight: 500;
 }
 
 button {
-    background-color: #007bff;
+    background-color: #007aff;
     color: white;
     border: none;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 12px 24px;
+    border-radius: 12px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: 10px;
+    transition: background-color 0.2s;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #005ec7;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transform: scale(1.05);
+    transition: background-color 0.2s, transform 0.2s;
 }
 
 button:disabled {
-    background-color: #ccc;
+    background-color: #333;
     cursor: not-allowed;
+    transform: none;
 }
 
-.hint {
+#current-task p.hint {
     font-style: italic;
     font-weight: bold;
+    color: #ffffff;
+}
+
+#rungs-and-logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #rungs-container {
-    position: absolute;
-    right: 60px;
-    top: 60px;
+    background: rgba(34, 34, 34, 0.75);
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    padding: 20px;
+    border-radius: 24px;
+    box-shadow: 1px 7px 8px rgba(0, 0, 0, 0.68);
+    width: 80px;
+    margin-bottom: 20px; /* Add some margin to separate the rungs container from the logo */
 }
 
 .rungs-title {
-    margin-bottom: 0px; /* Add some space between the title and the buttons */
-    text-align: left; /* Center-align the title */
-    color: #333; /* Set the text color */
-    font-size: 1em; /* Adjust the font size as needed */
+    /* margin-bottom: 10px; */
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
 }
 
 .rung-btn {
     display: block;
-    background-color: orange;
+    background-color: #ff9500;
     color: white;
-    padding: 10px;
+    padding: 12px 24px; /* Increased the padding to make the buttons wider */
     margin: 5px 0;
     border: none;
     cursor: pointer;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.2s;
+    width: 100%; /* Added to make the buttons fill the width of the rungs container */
+}
+
+.rung-btn:hover {
+    background-color: #e68600;
+    transform: scale(1.05);
 }
 
 .rung-btn:disabled {
-    background-color: #ccc;
+    background-color: #333;
     cursor: not-allowed;
+    transform: none;
 }
 
 .rung-btn.active {
-    border: 2px solid #000;
+    background-color: #ff9500;
+    transform: scale(1.1);
+    border: 1px solid #fff;
 }
 
 .rung-btn.active-disabled {
-    background-color: orange; /* Maintain the active button color even when disabled */
+    background-color: #ff9500;
     color: white;
-    cursor: default; /* Use default cursor for the currently-active rung's button */
+    cursor: default;
+}
+
+#tasks-container {
+    margin-top: 30px;
+}
+
+#app-logo {
+    width: 60px;
+    height: auto;
 }

@@ -51,6 +51,7 @@ function drawTask() {
     }
     document.getElementById('draw-task').style.display = 'none'; // Remove the button after the first press
     document.getElementById('submit-task').style.display = 'block'; // Show the "Submit Task" button after the first press
+    document.getElementById('current-task').style.display = 'block'; // Show the current task div after the first press
     syncTeamData();
     saveGameState();
 }
