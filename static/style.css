@@ -123,6 +123,11 @@ button:disabled {
     transform: none;
 }
 
+#submit-task {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #current-task p.hint {
     font-style: italic;
     font-weight: bold;
