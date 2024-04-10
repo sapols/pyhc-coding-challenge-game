@@ -80,6 +80,7 @@ h1.dashboard-title {
     margin-right: auto;
     overflow: hidden;
     color: #fff;
+    box-shadow: 1px 7px 8px rgba(0, 0, 0, 0.68);
 }
 
 #teams-table th,
@@ -96,13 +97,13 @@ h1.dashboard-title {
 }
 
 #teams-table tbody tr:nth-child(even) {
-    background-color: rgba(70, 70, 70, 0.8);
+    background-color: rgba(70, 70, 70, 0.4);
     -webkit-backdrop-filter: blur(15px);
     backdrop-filter: blur(15px);
 }
 
 #teams-table tbody tr:nth-child(odd) {
-    background-color: rgba(50, 50, 50, 0.8);
+    background-color: rgba(50, 50, 50, 0.4);
     -webkit-backdrop-filter: blur(15px);
     backdrop-filter: blur(15px);
 }
