@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
 
 body, html {
     font-family: 'Inter', sans-serif;
@@ -204,4 +204,38 @@ button:disabled {
     margin-top: 15px;  /* Add some margin to separate the rungs container from the logo */
     width: 70px;
     height: auto;
+}
+
+/* --------- DASHBOARD --------------------- */
+
+#dashboard {
+    background: rgba(34, 34, 34, 0.75);
+    width: 100vw;
+    height: 100vw;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+}
+h1.dashboard-title {
+    margin-top: 0px;
+    padding-top: 40px;
+}
+
+#timer {
+    font-family: Orbitron;
+    font-weight: 700;
+    font-size: 6em;
+    text-align: center;
+}
+
+#timer-button {
+    display: inline-block;
+}
+
+.button-container {
+    text-align: center;
+    width: 100%; /* Ensure it spans the full width of its parent */
+}
+
+#teams-info {
+    margin-left: 40px;
 }
