@@ -20,7 +20,7 @@ def index():
     return send_from_directory('static', 'index.html')
 
 
-@app.route('/dashboard')
+@app.route('/leaderboard')
 def dashboard():
     return send_from_directory('static', 'dashboard.html')
 
