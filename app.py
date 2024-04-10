@@ -22,7 +22,7 @@ def index():
 
 @app.route('/leaderboard')
 def dashboard():
-    return send_from_directory('static', 'dashboard.html')
+    return send_from_directory('static', 'leaderboard.html')
 
 
 @app.route('/api/init/<team_id>', methods=['POST'])

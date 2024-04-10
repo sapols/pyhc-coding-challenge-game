@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
 
 
-/* --------- DASHBOARD --------------------- */
+/* --------- LEADERBOARD --------------------- */
 
 body, html {
     font-family: 'Inter', sans-serif;
@@ -41,7 +41,7 @@ button:hover {
     transition: background-color 0.2s, transform 0.2s;
 }
 
-#dashboard {
+#leaderboard {
     background: rgba(34, 34, 34, 0.75);
     width: 100vw;
     height: 100vw;
@@ -49,7 +49,7 @@ button:hover {
     backdrop-filter: blur(15px);
 }
 
-h1.dashboard-title {
+h1.leaderboard-title {
     margin-top: 0px;
     padding-top: 40px;
 }
