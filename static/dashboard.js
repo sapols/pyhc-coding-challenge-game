@@ -52,35 +52,54 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to poll for team data and update the UI
     function updateTeamData() {
-    fetch('/api/all_team_data')
-        .then(response => response.json())
-        .then(data => {
-            const teamsInfoContainer = document.getElementById('teams-info');
-            teamsInfoContainer.innerHTML = ''; // Clear the container
+        fetch('/api/all_team_data')
+            .then(response => response.json())
+            .then(data => {
+                const teamsInfoContainer = document.getElementById('teams-info');
+                teamsInfoContainer.innerHTML = ''; // Clear the container
 
-            // Convert object to array and sort by points then rung then name, descending
-            const sortedTeams = Object.entries(data).sort((a, b) => {
-                // First, sort by points, descending
-                const pointsDifference = b[1].points - a[1].points;
-                if (pointsDifference !== 0) return pointsDifference;
+                // Convert object to array and sort by points then rung then name, descending
+                const sortedTeams = Object.entries(data).sort((a, b) => {
+                    // First, sort by points, descending
+                    const pointsDifference = b[1].points - a[1].points;
+                    if (pointsDifference !== 0) return pointsDifference;
 
-                // Next, if points are equal, sort by rung, descending
-                const rungDifference = b[1].current_rung - a[1].current_rung;
-                if (rungDifference !== 0) return rungDifference;
+                    // Next, if points are equal, sort by rung, descending
+                    const rungDifference = b[1].current_rung - a[1].current_rung;
+                    if (rungDifference !== 0) return rungDifference;
 
-                // Finally, if rungs are also equal, sort by team name, alphabetically
-                return a[0].localeCompare(b[0]);
-            });
+                    // Finally, if rungs are also equal, sort by team name, alphabetically
+                    return a[0].localeCompare(b[0]);
+                });
 
-            // Iterate through each sorted team and display their information
-            sortedTeams.forEach(([teamName, teamData]) => {
-                const teamDiv = document.createElement('div');
-                teamDiv.className = 'team-info'; // For styling, if needed
-                teamDiv.innerHTML = `<strong>${teamName}</strong>: Points: ${teamData.points}, Rung: ${teamData.current_rung}`;
-                teamsInfoContainer.appendChild(teamDiv);
-            });
-        })
-        .catch(error => console.error('Error fetching team data:', error));
+                // Iterate through each sorted team and display their information
+                sortedTeams.forEach(([teamName, teamData], index) => {
+                    const teamRow = document.createElement('tr');
+                    teamRow.classList.add('team-row');
+                    if (index === 0) {
+                        teamRow.classList.add('leader');
+                    }
+
+                    const teamNameCell = document.createElement('td');
+                    teamNameCell.classList.add('team-name');
+                    teamNameCell.innerHTML = `<i class="fas fa-ladder rung-icon"></i> ${teamName}`;
+
+                    const pointsCell = document.createElement('td');
+                    pointsCell.classList.add('team-points');
+                    pointsCell.textContent = teamData.points;
+
+                    const rungCell = document.createElement('td');
+                    rungCell.classList.add('team-rung');
+                    rungCell.textContent = teamData.current_rung;
+
+                    teamRow.appendChild(teamNameCell);
+                    teamRow.appendChild(pointsCell);
+                    teamRow.appendChild(rungCell);
+
+                    teamsInfoContainer.appendChild(teamRow);
+                });
+            })
+            .catch(error => console.error('Error fetching team data:', error));
     }
 
     // Set an interval to periodically update team data

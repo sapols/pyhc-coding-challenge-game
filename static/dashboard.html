@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PyHC Challenge Ladder Dashboard</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <div id="dashboard">
@@ -14,7 +15,16 @@
             <button id="timer-button">Start Timer</button>
         </div>
         <br><br>
-        <div id="teams-info"></div>
+        <table id="teams-table">
+            <thead>
+                <tr>
+                    <th>Team Name</th>
+                    <th>Points</th>
+                    <th>Rung</th>
+                </tr>
+            </thead>
+            <tbody id="teams-info"></tbody>
+        </table>
     </div>
     <script src="/static/dashboard.js"></script>
 </body>

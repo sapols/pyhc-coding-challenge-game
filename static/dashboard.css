@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+
+
+/* --------- DASHBOARD --------------------- */
+
+body, html {
+    font-family: 'Inter', sans-serif;
+    padding: 0;
+    margin: 0;
+    background: url('/static/img/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+h1 {
+    font-family: 'Orbitron';
+    font-size: 34px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+button {
+    background-color: #007aff;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: 10px;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #005ec7;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transform: scale(1.05);
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+#dashboard {
+    background: rgba(34, 34, 34, 0.75);
+    width: 100vw;
+    height: 100vw;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+}
+
+h1.dashboard-title {
+    margin-top: 0px;
+    padding-top: 40px;
+}
+
+#timer {
+    color: #fff;
+    font-family: Orbitron;
+    font-weight: 700;
+    font-size: 6em;
+    text-align: center;
+}
+
+#timer-button {
+    display: inline-block;
+}
+
+.button-container {
+    text-align: center;
+    width: 100%;
+}
+
+#teams-table {
+    width: 70%;
+    border-collapse: collapse;
+    border-radius: 24px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    color: #fff;
+}
+
+#teams-table th,
+#teams-table td {
+    padding: 12px;
+    text-align: left;
+}
+
+#teams-table thead {
+    font-family: Orbitron;
+    background-color: rgba(50, 50, 50, 0.8);
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+}
+
+#teams-table tbody tr:nth-child(even) {
+    background-color: rgba(70, 70, 70, 0.8);
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+}
+
+#teams-table tbody tr:nth-child(odd) {
+    background-color: rgba(50, 50, 50, 0.8);
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+}
+
+#teams-table tbody tr.leader {
+    color: #ff9500;
+    border: 5px solid #ff9500;
+}
+
+.team-name {
+    font-weight: bold;
+}
+
+.team-points {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.team-rung {
+    font-size: 14px;
+}
+
+.rung-icon {
+    margin-right: 5px;
+}
