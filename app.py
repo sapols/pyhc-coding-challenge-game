@@ -8,9 +8,10 @@ app = Flask(__name__)
 with open('coding_tasks.json', 'r') as file:
     tasks = json.load(file)
 
-# Example structure for teams_data with current tasks added
-# teams_data = {'team1': {'current_rung': 1, 'points': 0, 'hints': 2, 'skips': 1,
-#                         'completed_tasks': [], 'skipped_tasks': [], 'hinted_tasks': [], 'current_tasks': {1: None, 2: None, 3: None, 4: None, 5: None}}}
+# Example structure for teams_data:
+# teams_data = {'team1': {'current_rung': 1, 'points': 0, 'hints': 3, 'skips': 2,
+#                         'completed_tasks': [], 'skipped_tasks': [], 'hinted_tasks': [],
+#                         'current_tasks': {1: None, 2: None, 3: None, 4: None, 5: None}}}
 teams_data = {}
 INSTRUCTOR_PASSCODE = "1234"
 
