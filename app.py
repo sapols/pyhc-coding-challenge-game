@@ -32,8 +32,8 @@ def init_team(team_id):
         teams_data[team_id] = {
             'current_rung': 1,
             'points': 0,
-            'hints': 3,
-            'skips': 2,
+            'hints': 5,
+            'skips': 3,
             'completed_tasks': [],
             'skipped_tasks': [],
             'hinted_tasks': [],
