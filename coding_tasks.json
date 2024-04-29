@@ -292,15 +292,9 @@
             },
             {
                 "task_number": 45,
-                "title": "Parker Solar Probe",
-                "description": "???? something dealing with PSP images & streamers & noise ????",
-                "hint": ""
-            },
-            {
-                "task_number": 46,
-                "title": "Take Two Spacecraft With Different Angles and Reproject Their Views",
-                "description": "remix of SunPy 'reproject AIA & EUVI to show same region'.",
-                "hint": ""
+                "title": "Comparing Perspectives: Reproject SDO AIA and STEREO EUVI Solar Images",
+                "description": "As solar phenomena are often studied from multiple viewpoints to gain a three-dimensional understanding, your task is to use SunPy and the <code>reproject</code> package to fetch and plot images of the sun from both SDO AIA and STEREO EUVI, showing the solar limb from both perspectives on both images, and to reproject their views. Do the following:<br><ol><li>Download an image of the sun in the 193 Ångstrom wavelength from SDO AIA at the timestamp 2012-06-01/00:00:07.</li><li>Download an image of the sun in the 195 Ångstrom wavelength from STEREO EUVI at the timestamp 2012-06-01/00:05:30.</li><li>Resample the images to 512x512 pixels to reduce memory consumption.</li><li>Plot them side by side, highlighting the solar limb as seen by both instruments in each.</li><li>Use the <code>reproject</code> library to reproject the EUVI image to the viewpoint of the AIA.</li><li>And vice versa, reproject the AIA image to the viewpoint of the EUVI (effectively showing how each spacecraft would see the sun's region covered by the other).</li><li>Plot the reprojected images side by side for comparison.</li></ol>",
+                "hint": "Use SunPy's Fido interface to fetch the images, and the <code>reproject_to()</code> method to reproject one image to the other's perspective. Draw the solar limb in each plot for both the original and reprojected images to visualize the changes in perspective. Images as seen from the other's perspective will appear as partial slices of the sphere that is the sun."
             }
         ]
     }
