@@ -172,16 +172,36 @@ function skipCurrentTask() {
 
 // Skipping a task without decrementing skips left
 function skipCurrentTaskWithoutDecrement() {
-    fetch(`/api/skip_without_decrement/${teamId}/${currentTasks[currentRung]}`, { method: 'POST' })
-        .then(response => response.json())
-        .then(data => {
-            alert(`${data.message}\nSkips left: ${data.skips_left}`);
-            currentTasks[currentRung] = null; // Reset the current task for the rung after skipping
-            drawTask(); // Draw a new task for the current rung
-        })
-        .catch(error => console.error('Error skipping task without decrement:', error));
-    syncTeamData();
-    saveGameState();
+    // Prompt for the instructor's passcode
+    let passcode = prompt("Enter instructor's 4-digit passcode:");
+    if (passcode) {
+        fetch(`/api/verify_passcode/${passcode}`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.valid) {
+                    // Proceed with skipping the task without decrementing if the passcode is valid
+                    fetch(`/api/skip_without_decrement/${teamId}/${currentTasks[currentRung]}`, { method: 'POST' })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert(`${data.message}\nSkips left: ${data.skips_left}`);
+                            currentTasks[currentRung] = null; // Reset the current task for the rung after skipping
+                            drawTask(); // Draw a new task for the current rung
+                        })
+                        .catch(error => console.error('Error skipping task without decrement:', error));
+                    syncTeamData();
+                    saveGameState();
+                } else {
+                    // Handle invalid passcode
+                    alert("Invalid passcode. Skipping without decrement canceled.");
+                }
+            })
+            .catch(error => {
+                console.error('Error verifying passcode:', error);
+                alert("Error during passcode verification. Try again.");
+            });
+    } else {
+        alert("Skipping without decrement canceled.");
+    }
 }
 
 
