@@ -13,7 +13,7 @@ with open('coding_tasks.json', 'r') as file:
 #                         'completed_tasks': [], 'skipped_tasks': [], 'hinted_tasks': [],
 #                         'current_tasks': {1: None, 2: None, 3: None, 4: None, 5: None}}}
 teams_data = {}
-INSTRUCTOR_PASSCODE = "1234"
+INSTRUCTOR_PASSCODE = "4321"
 
 
 @app.route('/')
