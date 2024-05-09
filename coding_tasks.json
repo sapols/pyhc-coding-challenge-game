@@ -179,7 +179,7 @@
             {
                 "task_number": 28,
                 "title": "Extract GITM Data",
-                "description": "Extract the value of 'TEC' from a provided GITM run at 2015-03-14 01:00 UT, 30 degrees longitude, and 75 degrees latitude. NOTE: this will require local model output at 'DATA/GITM/GITM_small_test_data/'.",
+                "description": "Extract the value of 'TEC' from a provided GITM run at 2015-03-14 01:00 UT, 30 degrees longitude, and 75 degrees latitude. NOTE: this will require local model output at '/home/jovyan/science-tutorials/pyhc/data/DATA/GITM/GITM_small_test_data/'.",
                 "hint": "First make a Kamodo object with requested variables 'rho_n' and 'TEC', then extract from it."
             },
             {
@@ -251,7 +251,7 @@
             {
                 "task_number": 39,
                 "title": "Extract and Plot GITM Data",
-                "description": "Extract 'rho_n' and 'TEC' from a provided GITM run between 2015-03-14 00:00 and 2015-03-14 01:30 along the 'cnofs' satellite trajectory, then functionalize it in Kamodo and plot TEC. NOTE: this will require local model output at 'DATA/GITM/GITM_small_test_data/'.",
+                "description": "Extract 'rho_n' and 'TEC' from a provided GITM run between 2015-03-14 00:00 and 2015-03-14 01:30 along the 'cnofs' satellite trajectory, then functionalize it in Kamodo and plot TEC. NOTE: this will require local model output at '/home/jovyan/science-tutorials/pyhc/data/DATA/GITM/GITM_small_test_data/'.",
                 "hint": "Use the SatelliteFlythrough.RealFlight() function."
             },
             {
@@ -274,7 +274,7 @@
             },
             {
                 "task_number": 43,
-                "title": "Difference image",
+                "title": "Difference Image",
                 "description": "Pick 2 consecutive EUV images from SDO or STEREO and create a difference image (subtract the 2 to see what changed during that time step).",
                 "hint": "Calculate times for selecting pre-flare and post-flare images. Use SunPy's Fido for image retrieval, and then create a difference image by subtracting one from the other to visualize changes."
             }
