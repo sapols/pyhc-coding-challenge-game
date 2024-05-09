@@ -3,7 +3,7 @@ let teamId; // Team ID will be set upon page load
 let currentRung = 1; // Start from rung 1
 let highestUnlockedRung = 1; // Initially, only the first rung is unlocked (TODO: could be inferred from teamData.current_tasks: the highest rung with a defined task number. If I do that, I believe entering a team name that already exists when first prompted would perfectly restore the state of that team [at present, everything seems restored EXCEPT the highestUnlockedRung since only Rung1 is unlocked...])
 let teamData = {}; // Syncs with the back-end `teams_data` (TODO: does this make all other global variables unnecessary except teamId & currentRung? If so, delete them and refactor? Eh... maybe not worth it; could break at least the rung changing/unlocking logic)
-
+let longPressTimer; // Supports long-pressing "Submit Task" to skip without decrementing remaining skips (meant to skip unfairly broken tasks mid-game)
 
 // Function to draw a task, modified to use current rung and handle task for specific rung
 function drawTask() {
@@ -170,6 +170,20 @@ function skipCurrentTask() {
     saveGameState();
 }
 
+// Skipping a task without decrementing skips left
+function skipCurrentTaskWithoutDecrement() {
+    fetch(`/api/skip_without_decrement/${teamId}/${currentTasks[currentRung]}`, { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            alert(`${data.message}\nSkips left: ${data.skips_left}`);
+            currentTasks[currentRung] = null; // Reset the current task for the rung after skipping
+            drawTask(); // Draw a new task for the current rung
+        })
+        .catch(error => console.error('Error skipping task without decrement:', error));
+    syncTeamData();
+    saveGameState();
+}
+
 
 function syncTeamData() {
     fetch(`/api/team_data/${teamId}`)
@@ -309,6 +323,23 @@ document.addEventListener('DOMContentLoaded', function initializeOrLoadGame() {
         document.getElementById('team-points').innerHTML = `${teamId} Points: <b>0</b>`; // Initialize team points with team name
         document.getElementById('get-hint').addEventListener('click', requestHint);
         document.getElementById('skip-task').addEventListener('click', skipCurrentTask);
+        // Long press "Submit Task" to skip without decrementing (meant to skip unfairly broken tasks mid-game)
+        document.getElementById('submit-task').addEventListener('mousedown', function() {
+            longPressTimer = setTimeout(skipCurrentTaskWithoutDecrement, 6000); // 5000ms = 5 seconds
+        });
+        document.getElementById('submit-task').addEventListener('mouseup', function() {
+            clearTimeout(longPressTimer); // Cancel the long press if the mouse button is released
+        });
+        document.getElementById('submit-task').addEventListener('mouseleave', function() {
+            clearTimeout(longPressTimer); // Cancel the long press if the mouse leaves the button
+        });
+        document.getElementById('submit-task').addEventListener('touchstart', function(e) {
+            e.preventDefault(); // Prevent default touch behavior (like scrolling)
+            longPressTimer = setTimeout(skipCurrentTaskWithoutDecrement, 6000);
+        });
+        document.getElementById('submit-task').addEventListener('touchend', function() {
+            clearTimeout(longPressTimer);
+        });
 
         updateRungDisplay(); // Update the rung display
     }

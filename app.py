@@ -148,6 +148,24 @@ def skip_task(team_id, task_number):
     return jsonify({'error': 'No skips left'}), 404
 
 
+@app.route('/api/skip_without_decrement/<team_id>/<int:task_number>', methods=['POST'])
+def skip_task_without_decrement(team_id, task_number):
+    if team_id in teams_data:
+        # Add the skipped task to the skipped_tasks list
+        teams_data[team_id]['skipped_tasks'].append(task_number)
+        # Find the rung for the skipped task and reset the current task for that rung
+        for rung_key, rung_data in tasks.items():
+            for task in rung_data['tasks']:
+                if task['task_number'] == task_number:
+                    rung_number = int(rung_key.split('_')[1])
+                    teams_data[team_id]['current_tasks'][rung_number] = None
+                    break
+        print(f"teams_data:\n{teams_data}")  # TODO: DELETE MEE
+        return jsonify({'message': 'Task skipped without decrement.', 'skips_left': teams_data[team_id]['skips']}), 200
+    print(f"teams_data:\n{teams_data}")  # TODO: DELETE MEE
+    return jsonify({'error': 'Team not found'}), 404
+
+
 @app.route('/api/update_rung/<team_id>/<int:new_rung>', methods=['POST'])
 def update_current_rung(team_id, new_rung):
     if team_id in teams_data:
