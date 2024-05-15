@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Initialize variables for the timer
     let intervalId;
-    const duration = 90 * 60; // 90 minutes in seconds
+    const duration = 120 * 60; // 120 minutes in seconds
     let timerRunning = false; // Tracks whether the timer is running
     let timeRemaining = duration; // Track the remaining time
 
